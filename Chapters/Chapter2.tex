@@ -5,198 +5,155 @@
 %----------------------------------------------------------------------------------------
 %	SECTION 1
 %----------------------------------------------------------------------------------------
-Todos los capítulos deben comenzar con un breve párrafo introductorio que indique cuál es el contenido que se encontrará al leerlo.  La redacción sobre el contenido de la memoria debe hacerse en presente y todo lo referido al proyecto en pasado, siempre de modo impersonal.
+Durante este capítulo se brinda un marco orientativo sobre los requerimientos específicos del proyecto, la teoría básica involucrada y las tecnologías utilizadas para su realización.
 
-\section{Estilo y convenciones}
-\label{sec:ejemplo}
-
-\subsection{Uso de mayúscula inicial para los título de secciones}
-
-Si en el texto se hace alusión a diferentes partes del trabajo referirse a ellas como capítulo, sección o subsección según corresponda. Por ejemplo: ``En el capítulo \ref{Chapter1} se explica tal cosa'', o ``En la sección \ref{sec:ejemplo} se presenta lo que sea'', o ``En la subsección \ref{subsec:ejemplo} se discute otra cosa''.
-
-Cuando se quiere poner una lista tabulada, se hace así:
+\section{Requerimientos}
+El trabajo realizado es un equipo adquisidor de descargas parciales que tiene como cliente a la UTN FRGP. 
+A continuación se listan los requerimientos acordados al iniciar el trabajo. Cabe destacar que todos fueron cumplimentados en su totalidad con excepción de los requerimientos 23 y 24 que fueron modificados, de mutuo acuerdo con el cliente, sin generar deterioro alguno en las características del equipo.
 
 \begin{itemize}
-	\item Este es el primer elemento de la lista.
-	\item Este es el segundo elemento de la lista.
+\item Req 1: El dispositivo deberá, mediante el procesamiento de las adquisiciones, detectar los picos máximos de los pulsos de DP y representarlos sobre una senoide de referencia de frecuencia industrial - 50 Hertz - en fase con la tensión de ensayo (generar unpatrón de DP).
+\item Req 2: El dispositivo deberá funcionar como un sistema \it{stand-alone}.
+\item Req 3: El dispositivo debe mantener la fecha y hora por medio de un RTC.
+\item Req 4: El dispositivo deberá tener un puerto de acceso serial (preferentemente diferencial) para configuración y acceso a datos remoto.
+\item Req 5: El dispositivo deberá contar con un puerto USB para la descarga de los patrones de DP.
+\item Req 6: El dispositivo deberá permitir modificar el umbral de disparo a partir del cual se comenzará a procesar una señal.
+\item Req 7: El dispositivo deberá permitir modificar la cantidad de muestras que serán procesadas por disparo (máximo 1000).
+\item Req 8: El dispositivo deberá permitir modificar la cantidad de disparos (máximo 1000) que componen a un patrón de DP.
+\item Req 9: El dispositivo deberá permitir configurar el RTC.
+\item Req 10: El dispositivo deberá permitir planificar la generación automática de un patrón DP cada periodos múltiplos de 1 hora (calendario).
+\item Req 11:El dispositivo deberá permitir generar un patrón de DP con los parámetros configurados a demanda y transferirlo por el puerto serie.
+\item Req 12: El dispositivo deberá permitir poner al sistema en modo “ARMADO” y “ DESARMADO”.
+\item Req 13: En modo “ARMADO” el dispositivo deberá cumplir con las adquisiciones preestablecidas por calendario.
+\item Req 14: En modo “DESARMADO” el dispositivo no estará operativo.
+\item Req 15: La entrada de señal de referencia debe poder detectar los cruces por cero de una senoide de 50 Hz, y saber su polaridad.
+\item Req 16: La entrada de señal de referencia debe ser opto-acoplada.
+\item Req 17: El dispositivo deberá llevar un contador en milisegundos a partir de la señal de cruce por cero. De forma tal que se pueda saber en todo momento si está transcurriendo un semiciclo positivo o negativo y saber cuánto tiempo transcurrió desde su inicio.
+\item Req 18: Se deben poder adquirir señales con una ancho de banda entre 0.1 MHz y 40 MHz con una resolución mínima de 8 bits.
+\item Req 19: La amplitud máxima de la señal de entrada será de 1 Vpp.
+\item Req 20: La entrada para el sensor analógico deberá ser de 50 ohms diferencial.
+\item Req 21: El dispositivo deberá detectar cuando la señal muestreada supere el umbral de disparo, si esto sucediera las siguientes muestras (cantidad definida anteriormente en la configuración) deberán ser comparadas entre sí y preservar la de mayor magnitud. El valor obtenido deberá ser almacenado en memoria, junto con un timestamp, la polaridad del semiciclo de referencia y su momento angular. Este proceso debe ser repetido hasta que se cumplan los disparos que componen un patrón DP.
+\item Req 22: Deberá indicará su estado “ARMADO - DESARMADO” por medio de un led de estado.
+\item Req 23: Deberá permitir “ARMAR - DESARMAR” al sistema por medio de una tecla física.
+\item Req 24: Deberá realizar la acción de transferir a un pendrive el contenido total de la memoria interna por medio de una tecla fısica.
+\item Req 25: El dispositivo deberá listar todos los patrones de DP almacenados bajo el siguiente identificador “AAMMDDhhmm” en base a la fecha de generación del patrón.
+\item Req 26: El dispositivo deberá permitir seleccionar al patrón por medio de su identificador y solicitar su transferencia por puerto serie.
 \end{itemize}
 
-Notar el uso de las mayúsculas y el punto al final de cada elemento.
+Los requerimientos 23 y 24 fueron modificados debido a que el almacenamiento de las descargas parciales es realizado directamente en el pendrive. De esta forma se puede reducir el costo en el diseño y se elimina la necesidad de transferir archivos entre memorias. Ambos requerimientos fueron reemplazados por el siguiente:
+\begin{itemize}
+\item Deberá almacenar en el pendrive el patrón de DP al finalizar su adquisición.
+\end{itemize}
 
-Si se desea poner una lista numerada el formato es este:
 
-\begin{enumerate}
-	\item Este es el primer elemento de la lista.
-	\item Este es el segundo elemento de la lista.
-\end{enumerate}
+\section{Descripción general del sistema}
 
-Notar el uso de las mayúsculas y el punto al final de cada elemento.
-
-\subsection{Este es el título de una subsección}
-\label{subsec:ejemplo}
-
-Se recomienda no utilizar \textbf{texto en negritas} en ningún párrafo, ni tampoco texto \underline{subrayado}. En cambio sí se debe utilizar \textit{texto en itálicas} para palabras en un idioma extranjero, al menos la primera vez que aparecen en el texto. En el caso de palabras que estamos inventando se deben utilizar ``comillas'', así como también para citas textuales. Por ejemplo, un \textit{digital filter} es una especie de ``selector'' que permite separar ciertos componentes armónicos en particular.
-
-La escritura debe ser impersonal. Por ejemplo, no utilizar ``el diseño del firmware lo hice de acuerdo con tal principio'', sino ``el firmware fue diseñado utilizando tal principio''. 
-
-El trabajo es algo que al momento de escribir la memoria se supone que ya está concluido, entonces todo lo que se refiera a hacer el trabajo se narra en tiempo pasado, porque es algo que ya ocurrió. Por ejemplo, "se diseñó el firmware empleando la técnica de test driven development".
-
-En cambio, la memoria es algo que está vivo cada vez que el lector la lee. Por eso transcurre siempre en tiempo presente, como por ejemplo:
-
-``En el presente capítulo se da una visión global sobre las distintas pruebas realizadas y los resultados obtenidos. Se explica el modo en que fueron llevados a cabo los test unitarios y las pruebas del sistema''.
-
-Se recomienda no utilizar una sección de glosario sino colocar la descripción de las abreviaturas como parte del mismo cuerpo del texto. Por ejemplo, RTOS (\textit{Real Time Operating System}, Sistema Operativo de Tiempo Real) o en caso de considerarlo apropiado mediante notas a pie de página.
-
-Si se desea indicar alguna página web utilizar el siguiente formato de referencias bibliográficas, dónde las referencias se detallan en la sección de bibliografía de la memoria, utilizado el formato establecido por IEEE en \citep{IEEE:citation}. Por ejemplo, ``el presente trabajo se basa en la plataforma EDU-CIAA-NXP \citep{CIAA}, la cual...''.
-
-\subsection{Figuras} 
-
-Al insertar figuras en la memoria se deben considerar determinadas pautas. Para empezar, usar siempre tipografía claramente legible. Luego, tener claro que \textbf{es incorrecto} escribir por ejemplo esto: ``El diseño elegido es un cuadrado, como se ve en la siguiente figura:''
-
-\begin{figure}[h]
-\centering
-\includegraphics[scale=.45]{./Figures/cuadradoAzul.png}
-\end{figure}
-
-La forma correcta de utilizar una figura es con referencias cruzadas, por ejemplo: ``Se eligió utilizar un cuadrado azul para el logo, como puede observarse en la figura \ref{fig:cuadradoAzul}''.
+En la figura \ref{fig:bloques} se brinda una introducción de los módulos principales que abarcan el sistema y su interacción, por medio de este se busca brindar una mejor percepción de algunos temas abordados en este capítulo.
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[scale=.45]{./Figures/cuadradoAzul.png}
-	\caption{Ilustración del cuadrado azul que se eligió para el diseño del logo.}
-	\label{fig:cuadradoAzul}
+	\includegraphics[width=\textwidth]{./Figures/bloques.png}
+	\caption{Diagrama en bloques de sistema.}
+	\label{fig:bloques}
 \end{figure}
 
-El texto de las figuras debe estar siempre en español, excepto que se decida reproducir una figura original tomada de alguna referencia. En ese caso la referencia de la cual se tomó la figura debe ser indicada en el epígrafe de la figura e incluida como una nota al pie, como se ilustra en la figura \ref{fig:palabraIngles}.
+La funcionalidad principal del equipo es adquirir DPs que son almacenadas y procesadas en conjunto a su senoide de referencia para obtener un diagrama magnitud-fase.
 
-\begin{figure}[htpb]
-	\centering
-	\includegraphics[scale=.3]{./Figures/word.jpeg}
-	\caption{Imagen tomada de la página oficial del procesador\protect\footnotemark.}
-	\label{fig:palabraIngles}
-\end{figure}
-
-\footnotetext{Imagen tomada de \url{https://goo.gl/images/i7C70w}}
-
-La figura y el epígrafe deben conformar una unidad cuyo significado principal pueda ser comprendido por el lector sin necesidad de leer el cuerpo central de la memoria. Para eso es necesario que el epígrafe sea todo lo detallado que corresponda y si en la figura se utilizan abreviaturas entonces aclarar su significado en el epígrafe o en la misma figura.
-
-
+\section{Aislación óptica}
+Un optoacoplador es un dispositivo que vincula de forma óptica un diodo led y un fototransistor a través  de material aislante transparente. Utilizados como interfaz entre circuitos con diferentes potenciales de masa, los optoacopladores reemplazan la aislación por medio de transformadores y relés. También son utilizados para aislar circuitos lógicos y líneas de potencia evitando cambios de impedancia, mejorando la capacidad de aislación entre entrada y salida y facilitando la eliminación del ruido. Para este equipo se seleccionó el optoacoplador LTV357 de la empresa liteon, el mismo cumple con los requisitos de ser de bajo costo, tener una aislación de 3750 Vrms y una respuesta lineal hasta 2 KHz de frecuencia.\citep{opto:appnote},\citep{opto:ltv357}
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[scale=.37]{./Figures/questionMark.png}
-	\caption{¿Por qué de pronto aparece esta figura?}
-	\label{fig:questionMark}
+	\includegraphics[width=70mm]{./Figures/opto.png}
+	\caption{Representación esquemática de un optoacoplador.}
+	\label{fig:opto}
 \end{figure}
 
-Nunca colocar una figura en el documento antes de hacer la primera referencia a ella, como se ilustra con la figura \ref{fig:questionMark}, porque sino el lector no comprenderá por qué de pronto aparece la figura en el documento, lo que distraerá su atención.
+\section{Filtrado y adaptación}
+Una etapa de filtrado y adaptación es un punto crítico para cualquier diseño de adquisición de señales analogicas. La señal proveniente de los sensores puede contener componentes de frecuencia fuera del ancho de banda de interés. También es posible que los niveles de tensión de la señal no utilicen al máximo el rango dinámico de entrada perdiendo bits de conversión. La saturación por sobretensión también es un elemento que perjudica a la calidad de las mediciones y en algunos casos puede destruir al equipo.
+La etapa de filtrado está diseñada para dejar pasar las frecuencias dentro de la banda de interés atenuando en gran parte a todas aquellas fuera de rango.
+La etapa de adaptación permite llevar los niveles de tensión de entrada al máximo rango dinámico permitido, esto puede realizarse por medio de amplificación o atenuación de la señal dependiendo el caso. En esta etapa también se implementan protecciones por sobretensión que puedan arruinar al equipo, normalmente diseñadas con diodos de alta velocidad.
 
-Otra posibilidad es utilizar el entorno \textit{subfigure} para incluir más de una figura, como se puede ver en la figura \ref{fig:three graphs}. Notar que se pueden referenciar también las figuras internas individualmente de esta manera: \ref{fig:1de3}, \ref{fig:2de3} y \ref{fig:3de3}.
- 
-\begin{figure}[!htpb]
-     \centering
-     \begin{subfigure}[b]{0.3\textwidth}
-         \centering
-         \includegraphics[width=.65\textwidth]{./Figures/questionMark}
-         \caption{Un caption.}
-         \label{fig:1de3}
-     \end{subfigure}
-     \hfill
-     \begin{subfigure}[b]{0.3\textwidth}
-         \centering
-         \includegraphics[width=.65\textwidth]{./Figures/questionMark}
-         \caption{Otro.}
-         \label{fig:2de3}
-     \end{subfigure}
-     \hfill
-     \begin{subfigure}[b]{0.3\textwidth}
-         \centering
-         \includegraphics[width=.65\textwidth]{./Figures/questionMark}
-         \caption{Y otro más.}
-         \label{fig:3de3}
-     \end{subfigure}
-        \caption{Tres gráficos simples}
-        \label{fig:three graphs}
+\section{Procesamiento}
+La etapa de procesamiento es la encargada de orquestar todos los módulos del sistema. El equipo utiliza como microcontrolador principal un LPC4370 de la firma NXP. La elección fue determinada porque posee un conversor analogico digital de alta velocidad (80 MSPS) combinado con un procesador ARM cortex M4 y dos ARM cortes M0. También incluye en la versión con encapsulado TFBGA100 dos periféricos USB de alta velocidad, puerto serie, reloj de tiempo real y entradas de propósito general \citep{micro:lpc4370}.
+
+Fue determinante para su elección el periférico ADCHS y su bajo costo. Gracias a que los principales módulos del desarrollo pudieron ser resueltos con los periféricos internos, solo fue necesario implementar de forma externa la etapa de aislación óptica y la etapa de adaptación y filtrado de señal.
+
+Periféricos utilizados: 
+
+HS ADC - Conversor analogico digital de alta velocidad
+
+El LPC4370 TFBGA100 dispone de 3 conversores analógicos digitales de alta velocidad. Este es un periférico complejo que permite realizar adquisicion analogicas a una tasa de muestreo de 80 MSPS con una resolución de 12 bits. Para poder manejar este flujo de datos proporciona conexión por DMA. Otro característica importante es el sistema de disparo del trigger, que permite dos umbrales de disparo por flanco ascendente o descendente.
+
+Timers
+
+Dispone de 4 timers de 32 bits, que permiten ser configurados como contadores o temporizadores. Para permitir una mejor adaptación a los tiempos de aplicación, proporcionan prescaler y diferentes opciones suministro de clock.
+
+
+USB
+
+Dispone de 2 puertos USB 2.0 con velocidad de transferencia de hasta 480 mbits/s. Uno de ellos con tecnologia on-the-go
+UART. Ambos soportan DMA  y cumplen con las especificaciones Universal Serial Bus 2.0
+
+RTC - Reloj de tiempo real
+
+Dispone de un reloj de tiempo real con registros específicos para funcionar en bajo consumo. Este módulo requiere de un cristal propio de 32 KHz para generar una base de tiempo de 1 Hz independiente al CPU, también posee una línea de alimentación dedicada que puede ser alimentada por batería.
+
+
+\section{Muestreo de datos}
+Para procesar y almacenar las señales analogicas de alta frecuencia proveniente del pulso de una descarga parcial es preciso realizar un muestreo de amplitud de la señal. 
+El concepto de muestreo de amplitud de una señal analogica en intervalos de tiempo discretos se muestra en la figura \ref{fig:muestreo1}.
+La señal analogica debe ser muestreada en intervalos de tiempo discretos ts, este intervalo debe ser cuidadosamente escogido para asegurar una precisa representacion de la señal analogica original. Está claro que a mayor cantidad de muestras adquiridas mayor será la precisión de la representación digital, pero sí pocas muestras son tomadas se alcanza un punto en donde se pierde información crítica de la señal. Este punto está definido por los criterios de Nyquist \citep{sampling:appnote}.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=100mm]{./Figures/muestreo1.png}
+	\caption{Muestreo discreto de una señal analogica.}
+	\label{fig:muestreo1}
 \end{figure}
 
-El código para generar las imágenes se encuentra disponible para su reutilización en el archivo \file{Chapter2.tex}.
+Criterios de Nyquist
+\begin{itemize}
+\item Una señal analogica con un ancho de banda de fa debe ser sampleado a una tasa de muestreo \it{fs>2fa} para evitar pérdida de información.
+\item Si \it{fs>2fa} entonces un fenómeno llamado Aliasing ocurre en el ancho de banda de la señal
+\end{itemize}
 
-\subsection{Tablas}
+Con el fin de comprender la implicación del aliasing se debe considerar los cuatro casos representados en la figura \ref{fig:muestreo2} de una señal senoidal muestreada en el dominio del tiempo.
+En el caso 1 está claro que la cantidad de muestras es adecuada para preservar la información. En el caso 2 solo se realizaron 4 muestras por ciclo, pero aun así es una cantidad adecuada para preservar la información. En el caso 3 se representa un caso de la condición límite ambiguo donde \it{fs=2fa}. Si la relación entre los puntos muestreados y la señal fuese tal que el muestreo coincidiera con los cruces por cero toda la información se perdería. En el caso 4 la figura representa la situación donde \it{fs<2fa} y la información obtenida de las muestras dan como resultado una senoide de frecuencia inferior a \it{fs/2}, en este caso una frecuencia fuera de banda se entrelazo con ancho de banda de Nyquist. 
 
-Para las tablas utilizar el mismo formato que para las figuras, sólo que el epígrafe se debe colocar arriba de la tabla, como se ilustra en la tabla \ref{tab:peces}. Observar que sólo algunas filas van con líneas visibles y notar el uso de las negritas para los encabezados.  La referencia se logra utilizando el comando \verb|\ref{<label>}| donde label debe estar definida dentro del entorno de la tabla.
-
-\begin{verbatim}
-\begin{table}[h]
+\begin{figure}[ht]
 	\centering
-	\caption[caption corto]{caption largo más descriptivo}
-	\begin{tabular}{l c c}    
-		\toprule
-		\textbf{Especie}     & \textbf{Tamaño} & \textbf{Valor}\\
-		\midrule
-		Amphiprion Ocellaris & 10 cm           & \$ 6.000 \\		
-		Hepatus Blue Tang    & 15 cm           & \$ 7.000 \\
-		Zebrasoma Xanthurus  & 12 cm           & \$ 6.800 \\
-		\bottomrule
-		\hline
-	\end{tabular}
-	\label{tab:peces}
-\end{table}
-\end{verbatim}
+	\includegraphics[width=100mm]{./Figures/muestreo2.png}
+	\caption{Efecto \it{aliasing} en señales analogicas.}
+	\label{fig:muestreo2}
+\end{figure}
 
+Por lo expuesto anteriormente un conversor analogico digital debe ser precedido por un filtro anti-aliasing, figura \ref{fig:muestreo3}, que tenga suficiente atenuación a partir de la frecuencia de corte \it{fs/2} para prevenir que frecuencias fuera de banda indeseadas se entrelazan
 
-\begin{table}[h]
+\begin{figure}[ht]
 	\centering
-	\caption[caption corto]{caption largo más descriptivo}
-	\begin{tabular}{l c c}    
-		\toprule
-		\textbf{Especie} 	 & \textbf{Tamaño} 		& \textbf{Valor}  \\
-		\midrule
-		Amphiprion Ocellaris & 10 cm 				& \$ 6.000 \\		
-		Hepatus Blue Tang	 & 15 cm				& \$ 7.000 \\
-		Zebrasoma Xanthurus	 & 12 cm				& \$ 6.800 \\
-		\bottomrule
-		\hline
-	\end{tabular}
-	\label{tab:peces}
-\end{table}
+	\includegraphics[width=100mm]{./Figures/muestreo3.png}
+	\caption{Filtro pasabajos \it{anti-aliasing}.}
+	\label{fig:muestreo3}
+\end{figure}
 
-En cada capítulo se debe reiniciar el número de conteo de las figuras y las tablas, por ejemplo, figura 2.1 o tabla 2.1, pero no se debe reiniciar el conteo en cada sección. Por suerte la plantilla se encarga de esto por nosotros.
+\section{Listado de las herramientas utilizadas}
+Para este trabajo se utilizaron las siguientes herramientas de hardware:
+\begin{itemize}
+\item Placa LPC Link2 como programador y debugger.
+\item Placa LPC Link2 como placa de desarrollo.
+\item Fuente de alimentación conmutada Minileaf 0-30V 10A
+\item Osciloscopio Siglent SDS1202X-E de 200 MHz para verificar las mediciones y tiempos realizados por el equipo.
+\item DDS FY6900 de 60 MHz para la generación de señales en el banco de pruebas.
+\item Analizador lógico Saleae para el control de tiempos.
+\item Multímetro.
+\end{itemize}
 
-\subsection{Ecuaciones}
-\label{sec:Ecuaciones}
 
-Al insertar ecuaciones en la memoria dentro de un entorno \textit{equation}, éstas se numeran en forma automática  y se pueden referir al igual que como se hace con las figuras y tablas, por ejemplo ver la ecuación \ref{eq:metric}.
-
-\begin{equation}
-	\label{eq:metric}
-	ds^2 = c^2 dt^2 \left( \frac{d\sigma^2}{1-k\sigma^2} + \sigma^2\left[ d\theta^2 + \sin^2\theta d\phi^2 \right] \right)
-\end{equation}
-                                                        
-Es importante tener presente que si bien las ecuaciones pueden ser referidas por su número, también es correcto utilizar los dos puntos, como por ejemplo ``la expresión matemática que describe este comportamiento es la siguiente:''
-
-\begin{equation}
-	\label{eq:schrodinger}
-	\frac{\hbar^2}{2m}\nabla^2\Psi + V(\mathbf{r})\Psi = -i\hbar \frac{\partial\Psi}{\partial t}
-\end{equation}
-
-Para generar la ecuación \ref{eq:metric} se utilizó el siguiente código:
-
-\begin{verbatim}
-\begin{equation}
-	\label{eq:metric}
-	ds^2 = c^2 dt^2 \left( \frac{d\sigma^2}{1-k\sigma^2} + 
-	\sigma^2\left[ d\theta^2 + 
-	\sin^2\theta d\phi^2 \right] \right)
-\end{equation}
-\end{verbatim}
-
-Y para la ecuación \ref{eq:schrodinger}:
-
-\begin{verbatim}
-\begin{equation}
-	\label{eq:schrodinger}
-	\frac{\hbar^2}{2m}\nabla^2\Psi + V(\mathbf{r})\Psi = 
-	-i\hbar \frac{\partial\Psi}{\partial t}
-\end{equation}
-
-\end{verbatim}
+También se utilizaron la siguiente herramientas de software:
+\begin{itemize}
+\item Mcuxpresso ide 11.3 para el diseño del firmware.
+\item Python 3 para la generación de scripts para el banco de prueba y scripts de procesamiento de datos.
+\item Planilla de cálculos.
+\item Minicom para acceder a la interfaz.
+\end{itemize}
