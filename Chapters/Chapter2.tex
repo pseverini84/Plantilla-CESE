@@ -8,22 +8,23 @@
 Durante este capítulo se brinda un marco orientativo sobre los requerimientos específicos del proyecto, la teoría básica involucrada y las tecnologías utilizadas para su realización.
 
 \section{Requerimientos}
-El trabajo realizado es un equipo adquisidor de descargas parciales que tiene como cliente a la UTN FRGP. 
+El trabajo realizado es un equipo adquisidor de DP que tiene como cliente a la UTN FRGP. 
+
 A continuación se listan los requerimientos acordados al iniciar el trabajo. Cabe destacar que todos fueron cumplimentados en su totalidad con excepción de los requerimientos 23 y 24 que fueron modificados, de mutuo acuerdo con el cliente, sin generar deterioro alguno en las características del equipo.
 
 \begin{itemize}
-\item Req 1: El dispositivo deberá, mediante el procesamiento de las adquisiciones, detectar los picos máximos de los pulsos de DP y representarlos sobre una senoide de referencia de frecuencia industrial - 50 Hertz - en fase con la tensión de ensayo (generar unpatrón de DP).
-\item Req 2: El dispositivo deberá funcionar como un sistema \it{stand-alone}.
-\item Req 3: El dispositivo debe mantener la fecha y hora por medio de un RTC.
+\item Req 1: El dispositivo deberá, mediante el procesamiento de las adquisiciones, detectar los picos máximos de los pulsos de DP y representarlos sobre una senoide de referencia de frecuencia industrial - 50 Hertz - en fase con la tensión de ensayo (generar un patrón de DP).
+\item Req 2: El dispositivo deberá funcionar como un sistema \textit{stand-alone}.
+\item Req 3: El dispositivo deberá mantener la fecha y hora por medio de un RTC.
 \item Req 4: El dispositivo deberá tener un puerto de acceso serial (preferentemente diferencial) para configuración y acceso a datos remoto.
 \item Req 5: El dispositivo deberá contar con un puerto USB para la descarga de los patrones de DP.
-\item Req 6: El dispositivo deberá permitir modificar el umbral de disparo a partir del cual se comenzará a procesar una señal.
-\item Req 7: El dispositivo deberá permitir modificar la cantidad de muestras que serán procesadas por disparo (máximo 1000).
+\item Req 6: El dispositivo deberá permitir modificar el umbral de disparo a partir del cual se comenzará a adquirir una señal.
+\item Req 7: El dispositivo deberá permitir modificar la cantidad de muestras que serán adquiridas por disparo (máximo 1000).
 \item Req 8: El dispositivo deberá permitir modificar la cantidad de disparos (máximo 1000) que componen a un patrón de DP.
 \item Req 9: El dispositivo deberá permitir configurar el RTC.
 \item Req 10: El dispositivo deberá permitir planificar la generación automática de un patrón DP cada periodos múltiplos de 1 hora (calendario).
-\item Req 11:El dispositivo deberá permitir generar un patrón de DP con los parámetros configurados a demanda y transferirlo por el puerto serie.
-\item Req 12: El dispositivo deberá permitir poner al sistema en modo “ARMADO” y “ DESARMADO”.
+\item Req 11: El dispositivo deberá permitir generar un patrón de DP con los parámetros configurados a demanda y transferirlo por el puerto serie.
+\item Req 12: El dispositivo deberá permitir poner al sistema en modo “ARMADO” o “ DESARMADO”.
 \item Req 13: En modo “ARMADO” el dispositivo deberá cumplir con las adquisiciones preestablecidas por calendario.
 \item Req 14: En modo “DESARMADO” el dispositivo no estará operativo.
 \item Req 15: La entrada de señal de referencia debe poder detectar los cruces por cero de una senoide de 50 Hz, y saber su polaridad.
@@ -40,7 +41,7 @@ A continuación se listan los requerimientos acordados al iniciar el trabajo. Ca
 \item Req 26: El dispositivo deberá permitir seleccionar al patrón por medio de su identificador y solicitar su transferencia por puerto serie.
 \end{itemize}
 
-Los requerimientos 23 y 24 fueron modificados debido a que el almacenamiento de las descargas parciales es realizado directamente en el pendrive. De esta forma se puede reducir el costo en el diseño y se elimina la necesidad de transferir archivos entre memorias. Ambos requerimientos fueron reemplazados por el siguiente:
+Los requerimientos 23 y 24 fueron modificados debido a que el almacenamiento de las DP es realizado directamente en el pendrive. De esta forma se puede reducir el costo en el diseño y se elimina la necesidad de transferir archivos entre memorias. Ambos requerimientos fueron reemplazados por el siguiente:
 \begin{itemize}
 \item Deberá almacenar en el pendrive el patrón de DP al finalizar su adquisición.
 \end{itemize}
@@ -48,7 +49,7 @@ Los requerimientos 23 y 24 fueron modificados debido a que el almacenamiento de 
 
 \section{Descripción general del sistema}
 
-En la figura \ref{fig:bloques} se brinda una introducción de los módulos principales que abarcan el sistema y su interacción, por medio de este se busca brindar una mejor percepción de algunos temas abordados en este capítulo.
+En la figura \ref{fig:bloques} se brinda una introducción de los módulos principales que abarcan el sistema y su interacción, por medio de este se busca brindar una mejor interpretación de algunos temas abordados en este capítulo.
 
 \begin{figure}[ht]
 	\centering
@@ -57,7 +58,7 @@ En la figura \ref{fig:bloques} se brinda una introducción de los módulos princ
 	\label{fig:bloques}
 \end{figure}
 
-La funcionalidad principal del equipo es adquirir DPs que son almacenadas y procesadas en conjunto a su senoide de referencia para obtener un diagrama magnitud-fase.
+El objetivo principal del equipo consiste en adquirir, almacenar y procesar señales de DPs para posteriormente, junto a la senoide de referencia, conformar el diagrama de magnitud-fase o patrón de DP.
 
 \section{Aislación óptica}
 Un optoacoplador es un dispositivo que vincula de forma óptica un diodo led y un fototransistor a través  de material aislante transparente. Utilizados como interfaz entre circuitos con diferentes potenciales de masa, los optoacopladores reemplazan la aislación por medio de transformadores y relés. También son utilizados para aislar circuitos lógicos y líneas de potencia evitando cambios de impedancia, mejorando la capacidad de aislación entre entrada y salida y facilitando la eliminación del ruido. Para este equipo se seleccionó el optoacoplador LTV357 de la empresa liteon, el mismo cumple con los requisitos de ser de bajo costo, tener una aislación de 3750 Vrms y una respuesta lineal hasta 2 KHz de frecuencia.\citep{opto:appnote},\citep{opto:ltv357}
@@ -70,40 +71,45 @@ Un optoacoplador es un dispositivo que vincula de forma óptica un diodo led y u
 \end{figure}
 
 \section{Filtrado y adaptación}
-Una etapa de filtrado y adaptación es un punto crítico para cualquier diseño de adquisición de señales analogicas. La señal proveniente de los sensores puede contener componentes de frecuencia fuera del ancho de banda de interés. También es posible que los niveles de tensión de la señal no utilicen al máximo el rango dinámico de entrada perdiendo bits de conversión. La saturación por sobretensión también es un elemento que perjudica a la calidad de las mediciones y en algunos casos puede destruir al equipo.
+Una etapa de filtrado y adaptación es un punto crítico para cualquier diseño de adquisición de señales analógicas. La señal proveniente de los sensores puede contener componentes de frecuencia fuera del ancho de banda de interés. También es posible que los niveles de tensión de la señal no utilicen al máximo el rango dinámico de entrada perdiendo bits de conversión. La saturación por sobretensión también es un elemento que perjudica a la calidad de las mediciones y en algunos casos puede destruir al equipo. 
+
 La etapa de filtrado está diseñada para dejar pasar las frecuencias dentro de la banda de interés atenuando en gran parte a todas aquellas fuera de rango.
-La etapa de adaptación permite llevar los niveles de tensión de entrada al máximo rango dinámico permitido, esto puede realizarse por medio de amplificación o atenuación de la señal dependiendo el caso. En esta etapa también se implementan protecciones por sobretensión que puedan arruinar al equipo, normalmente diseñadas con diodos de alta velocidad.
+
+La etapa de adaptación permite llevar los niveles de tensión de entrada al máximo rango dinámico permitido, esto puede realizarse por medio de amplificación o atenuación de la señal dependiendo el caso. En esta etapa también se implementan protecciones por sobretensión que puedan dañar al equipo, normalmente diseñadas con diodos de alta velocidad.
 
 \section{Procesamiento}
-La etapa de procesamiento es la encargada de orquestar todos los módulos del sistema. El equipo utiliza como microcontrolador principal un LPC4370 de la firma NXP. La elección fue determinada porque posee un conversor analogico digital de alta velocidad (80 MSPS) combinado con un procesador ARM cortex M4 y dos ARM cortes M0. También incluye en la versión con encapsulado TFBGA100 dos periféricos USB de alta velocidad, puerto serie, reloj de tiempo real y entradas de propósito general \citep{micro:lpc4370}.
+La etapa de procesamiento es la encargada de orquestar todos los módulos del sistema. El equipo utiliza como microcontrolador principal un LPC4370 de la firma NXP. La elección fue determinada porque posee un conversor analógico digital de alta velocidad (80 MSPS) combinado con un procesador ARM cortex M4 y dos ARM cortes M0. También incluye en la versión con encapsulado TFBGA100 dos periféricos USB de alta velocidad, puerto serie, reloj de tiempo real y entradas de propósito general \citep{micro:lpc4370}.
 
 Fue determinante para su elección el periférico ADCHS y su bajo costo. Gracias a que los principales módulos del desarrollo pudieron ser resueltos con los periféricos internos, solo fue necesario implementar de forma externa la etapa de aislación óptica y la etapa de adaptación y filtrado de señal.
 
 Periféricos utilizados: 
+\begin{itemize}
 
-HS ADC - Conversor analogico digital de alta velocidad
+\item HS ADC - Conversor analógico digital de alta velocidad
 
-El LPC4370 TFBGA100 dispone de 3 conversores analógicos digitales de alta velocidad. Este es un periférico complejo que permite realizar adquisicion analogicas a una tasa de muestreo de 80 MSPS con una resolución de 12 bits. Para poder manejar este flujo de datos proporciona conexión por DMA. Otro característica importante es el sistema de disparo del trigger, que permite dos umbrales de disparo por flanco ascendente o descendente.
+El LPC4370 TFBGA100 dispone de 3 conversores analógicos digitales de alta velocidad. Este es un periférico complejo que permite realizar adquisiciones analógicas a una tasa de muestreo de 80 MSPS con una resolución de 12 bits. Para poder manejar este flujo de datos proporciona conexión por DMA. Otro característica importante es el sistema de disparo del trigger, que permite dos umbrales de disparo por flanco ascendente o descendente.
 
-Timers
+\item Timers
 
-Dispone de 4 timers de 32 bits, que permiten ser configurados como contadores o temporizadores. Para permitir una mejor adaptación a los tiempos de aplicación, proporcionan prescaler y diferentes opciones suministro de clock.
+Dispone de 4 timers de 32 bits, que permiten ser configurados como contadores o temporizadores. Para permitir una mejor adaptación a los tiempos de aplicación, proporcionan divisores y diferentes opciones suministro de clock.
 
 
-USB
+\item USB
 
-Dispone de 2 puertos USB 2.0 con velocidad de transferencia de hasta 480 mbits/s. Uno de ellos con tecnologia on-the-go
-UART. Ambos soportan DMA  y cumplen con las especificaciones Universal Serial Bus 2.0
+Dispone de 2 puertos USB 2.0 con velocidad de transferencia de hasta 480 Mb/s. Uno de ellos con tecnología on-the-go. Ambos soportan DMA  y cumplen con las especificaciones Universal Serial Bus 2.0
 
-RTC - Reloj de tiempo real
+\item RTC - Reloj de tiempo real
 
 Dispone de un reloj de tiempo real con registros específicos para funcionar en bajo consumo. Este módulo requiere de un cristal propio de 32 KHz para generar una base de tiempo de 1 Hz independiente al CPU, también posee una línea de alimentación dedicada que puede ser alimentada por batería.
+\end{itemize}
 
 
 \section{Muestreo de datos}
-Para procesar y almacenar las señales analogicas de alta frecuencia proveniente del pulso de una descarga parcial es preciso realizar un muestreo de amplitud de la señal. 
-El concepto de muestreo de amplitud de una señal analogica en intervalos de tiempo discretos se muestra en la figura \ref{fig:muestreo1}.
-La señal analogica debe ser muestreada en intervalos de tiempo discretos ts, este intervalo debe ser cuidadosamente escogido para asegurar una precisa representacion de la señal analogica original. Está claro que a mayor cantidad de muestras adquiridas mayor será la precisión de la representación digital, pero sí pocas muestras son tomadas se alcanza un punto en donde se pierde información crítica de la señal. Este punto está definido por los criterios de Nyquist \citep{sampling:appnote}.
+Para procesar y almacenar las señales analógicas de alta frecuencia proveniente del pulso de una DP es preciso realizar un muestreo de amplitud de la señal. 
+
+El concepto de muestreo de amplitud de una señal analógica en intervalos de tiempo discretos se muestra en la figura \ref{fig:muestreo1}.
+
+La señal analógica debe ser muestreada en intervalos de tiempo discretos ts, este intervalo debe ser cuidadosamente escogido para asegurar una precisa representacion de la señal analógica original. Está claro que a mayor cantidad de muestras adquiridas mayor será la precisión de la representación digital, pero sí pocas muestras son tomadas se alcanza un punto en donde se pierde información crítica de la señal. Este punto está definido por los criterios de Nyquist \citep{sampling:appnote}.
 
 \begin{figure}[ht]
 	\centering
@@ -114,33 +120,33 @@ La señal analogica debe ser muestreada en intervalos de tiempo discretos ts, es
 
 Criterios de Nyquist
 \begin{itemize}
-\item Una señal analogica con un ancho de banda de fa debe ser sampleado a una tasa de muestreo \it{fs>2fa} para evitar pérdida de información.
-\item Si \it{fs>2fa} entonces un fenómeno llamado Aliasing ocurre en el ancho de banda de la señal
+\item Una señal analógica con un ancho de banda de \textit{fa} debe ser sampleado a una tasa de muestreo \textit{fs>2fa} para evitar pérdida de información.
+\item Si \textit{fs<2fa} entonces un fenómeno llamado \textit{aliasing} ocurre en el ancho de banda de la señal
 \end{itemize}
 
-Con el fin de comprender la implicación del aliasing se debe considerar los cuatro casos representados en la figura \ref{fig:muestreo2} de una señal senoidal muestreada en el dominio del tiempo.
-En el caso 1 está claro que la cantidad de muestras es adecuada para preservar la información. En el caso 2 solo se realizaron 4 muestras por ciclo, pero aun así es una cantidad adecuada para preservar la información. En el caso 3 se representa un caso de la condición límite ambiguo donde \it{fs=2fa}. Si la relación entre los puntos muestreados y la señal fuese tal que el muestreo coincidiera con los cruces por cero toda la información se perdería. En el caso 4 la figura representa la situación donde \it{fs<2fa} y la información obtenida de las muestras dan como resultado una senoide de frecuencia inferior a \it{fs/2}, en este caso una frecuencia fuera de banda se entrelazo con ancho de banda de Nyquist. 
+Con el fin de comprender la implicación del \textit{aliasing} se deben considerar los cuatro casos representados en la figura \ref{fig:muestreo2} de una señal senoidal muestreada en el dominio del tiempo.
+En el caso 1 está claro que la cantidad de muestras es adecuada para preservar la información. En el caso 2 solo se realizaron 4 muestras por ciclo, pero aun así es una cantidad adecuada para preservar la información. En el caso 3 se representa un caso de la condición límite ambiguo donde \textit{fs=2fa}. Si la relación entre los puntos muestreados y la señal fuese tal que el muestreo coincidiera con los cruces por cero toda la información se perdería. En el caso 4 la figura representa la situación donde \textit{fs<2fa} y la información obtenida de las muestras dan como resultado una senoide de frecuencia inferior a \textit{fs/2}, en este caso una frecuencia fuera de banda se entrelazo con ancho de banda de Nyquist. 
 
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=100mm]{./Figures/muestreo2.png}
-	\caption{Efecto \it{aliasing} en señales analogicas.}
+	\caption{Efecto \textit{aliasing} en señales analogicas.}
 	\label{fig:muestreo2}
 \end{figure}
 
-Por lo expuesto anteriormente un conversor analogico digital debe ser precedido por un filtro anti-aliasing, figura \ref{fig:muestreo3}, que tenga suficiente atenuación a partir de la frecuencia de corte \it{fs/2} para prevenir que frecuencias fuera de banda indeseadas se entrelazan
+Por lo expuesto anteriormente un conversor analógico digital debe ser precedido por un filtro anti-aliasing, figura \ref{fig:muestreo3}, que tenga suficiente atenuación a partir de la frecuencia de corte \textit{fs/2} para prevenir que frecuencias fuera de banda indeseadas se entrelazan
 
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=100mm]{./Figures/muestreo3.png}
-	\caption{Filtro pasabajos \it{anti-aliasing}.}
+	\caption{Filtro pasabajos \textit{anti-aliasing}.}
 	\label{fig:muestreo3}
 \end{figure}
 
-\section{Listado de las herramientas utilizadas}
+\section{Listado de herramientas utilizadas}
 Para este trabajo se utilizaron las siguientes herramientas de hardware:
 \begin{itemize}
-\item Placa LPC Link2 como programador y debugger.
+\item Placa LPC Link2 como programador y \textit{debugger}.
 \item Placa LPC Link2 como placa de desarrollo.
 \item Fuente de alimentación conmutada Minileaf 0-30V 10A
 \item Osciloscopio Siglent SDS1202X-E de 200 MHz para verificar las mediciones y tiempos realizados por el equipo.
@@ -152,8 +158,7 @@ Para este trabajo se utilizaron las siguientes herramientas de hardware:
 
 También se utilizaron la siguiente herramientas de software:
 \begin{itemize}
-\item Mcuxpresso ide 11.3 para el diseño del firmware.
+\item Mcuxpresso ide 11.3 para el diseño del firmware \citep{mcuxpresso}.
 \item Python 3 para la generación de scripts para el banco de prueba y scripts de procesamiento de datos.
-\item Planilla de cálculos.
 \item Minicom para acceder a la interfaz.
 \end{itemize}

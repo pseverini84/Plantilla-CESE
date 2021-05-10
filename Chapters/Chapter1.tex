@@ -21,10 +21,10 @@ En este capítulo se realiza una breve introducción de los elementos externos q
 \section{Descargas parciales}
 Según IEEE
 
-(Guide for the Measurement of Partial Discharges in AC Electric Machinery)
-\enquote{Una DP (descarga parcial) es una descarga eléctrica que cortocircuita parcialmente el material aislante ubicado entre dos conductores. Cuando la tensión excede cierto valor crítico, se produce una ionización gaseosa transitoria en el sistema aislante, a dicha ionización se la denomina DP} \citep{IEEE:citation}
+\textit{(Guide for the Measurement of Partial Discharges in AC Electric Machinery)}
+\enquote{Una DP es una descarga eléctrica que cortocircuita parcialmente el material aislante ubicado entre dos conductores. Cuando la tensión excede cierto valor crítico, se produce una ionización gaseosa transitoria en el sistema aislante, a dicha ionización se la denomina DP} \citep{IEEE:citation}
 
-Una descarga parcial es un fenómeno de disrupción eléctrica. Se caracteriza por ser un pulso de corriente de alta frecuencia el cual se produce en el seno de un sistema aislante de una máquina o equipo eléctrico de potencia de media o alta tensión como consecuencia de la presencia de  oclusiones gaseosas, impurezas aristas aguzadas u otras anomalıas que distorsionan la distribución de las lineas de campo eléctrico, figura \ref{fig:basicoDp}.
+Una descarga parcial es un fenómeno de disrupción eléctrica. Se caracteriza por ser un pulso de corriente de alta frecuencia el cual se produce en el seno de un sistema aislante de una máquina o equipo eléctrico de potencia de media o alta tensión como consecuencia de la presencia de  oclusiones gaseosas, impurezas, aristas aguzadas u otras anomalıas que distorsionan la distribución de las líneas de campo eléctrico, figura \ref{fig:basicoDp}.
 
 \begin{figure}[ht]
 	\centering
@@ -33,11 +33,12 @@ Una descarga parcial es un fenómeno de disrupción eléctrica. Se caracteriza p
 	\label{fig:basicoDp}
 \end{figure}
 
-La ocurrencia de este fenómeno provoca un deterioro del sistema aislante. Dependiendo del medio en el que este fenómeno se manifiesta y cuál sea la causa que lo origina, el deterioro del sistema es acumulativo.
+La ocurrencia de este fenómeno provoca un deterioro del sistema aislante. Dependiendo del medio en el que este fenómeno se manifiesta y cuál sea la causa que lo origina, el deterioro del sistema puede ser acumulativo.
 
-\subsection{Medidores de descargas parciales}
-La técnica eléctrica más utilizada para medir una DP, se basa en registrar las corrientes que se producen en el seno del medio aislante mediante la utilización de sensores inductivos pasivos de alta frecuencia conectados en las derivaciones a tierra de los equipos que se desean ensayar.
-Cuando la DP se produce en el interior del sistema aislante, las corrientes que circulan hacia tierra pasan a través de un sensor inductivo; induciendo una fuerza electromotriz proporcional a la carga involucrada, figura \ref{fig:dpEjemplo}.
+\section{Medidores de descargas parciales}
+La técnica eléctrica más utilizada se basa en registrar las corrientes originadas por las DP en el interior del sistema aislante. La detección de estas se realiza mediante la utilización de sensores inductivos pasivos de alta frecuencia conectados en las derivaciones a tierra de los equipos que se desean ensayar.
+
+Cuando la DP se produce en el interior del sistema aislante, las corrientes que circulan hacia tierra pasan a través del sensor inductivo; induciendo una fuerza electromotriz proporcional a la carga involucrada, figura \ref{fig:dpEjemplo}.
 
 \begin{figure}[ht]
 	\centering
@@ -46,7 +47,7 @@ Cuando la DP se produce en el interior del sistema aislante, las corrientes que 
 	\label{fig:dpEjemplo}
 \end{figure}
 
-Las DP registradas son utilizadas dentro de un sistema de referencias, en su eje de ordenadas se representa la máxima amplitud del pulso y en el eje de abscisas el momento angular correspondiente de la senoide de referencia de 50 Hz. Por medio de la superposición de múltiples eventos sobre un mismo periodo de 50 Hz se conforma lo que se conoce en la literatura especializada como Diagrama de Magnitud - Fase o Patrón de DP, figura \ref{fig:patronEjemplo}.
+Las DP registradas, son representadas en un sistema de referencias en cuyo eje de ordenadas se representa la máxima amplitud del pulso y en el eje de abscisa el momento angular en que el fenómeno ocurre respecto de una senoide de referencia de 50 Hz. Por medio de la superposición de múltiples eventos sobre un mismo periodo de 50 Hz se conforma lo que se conoce en la literatura especializada como Diagrama de Magnitud - Fase o Patrón de DP, figura \ref{fig:patronEjemplo}.
 
 \begin{figure}[!ht]
 	\centering
@@ -55,10 +56,12 @@ Las DP registradas son utilizadas dentro de un sistema de referencias, en su eje
 	\label{fig:patronEjemplo}
 \end{figure}
 
-Los patrones de descargas parciales permiten identificar, por medio de su interpretación, diferentes tipos de DP \citep{Gulski:citation}, y mediante la identificación del tipo es posible emitir un diagnóstico y conocer el grado de severidad de un falla, ya que distintos tipos de DP tienen asociados distintos riesgos \citep{Cavallini:citation}.
+Los patrones de DP permiten identificar, por medio de su estructura, el grado de severidad de un falla \citep{Gulski:citation}, También permiten emitir un diagnóstico, ya que distintos tipos de DP tienen asociados distintos riesgos \citep{Cavallini:citation}.
 
 Sensor inductivo
-Los transformadores de corriente de alta frecuencia (HFCT), figura \ref{fig:hfct}, son sensores inductivos adecuados para adquisiciones de DP. Estos se instalan abrazando la pantalla del cable de descarga a tierra sobre el que se desea medir la descarga parcial. 
+
+Los transformadores de corriente de alta frecuencia (HFCT), figura XX, son sensores inductivos que dada su robustez y su sensibilidad están ampliamente difundidos como elementos captores para mediciones de DP en campo. Estos se instalan en las derivaciones a tierra de las máquinas o equipos eléctricos de potencia donde se desea medir la ocurrencia de este fenómeno.
+
 
 \begin{figure}[ht]
 	\centering
@@ -68,17 +71,16 @@ Los transformadores de corriente de alta frecuencia (HFCT), figura \ref{fig:hfct
 \end{figure}
 
 \section{Estado del arte}
-Actualmente existen equipos de medición de descargas parciales fabricados por empresas extranjeras como TechImp, PD Power Diagnostix, Omnicrom. Si bien esta gama de equipos abarca un amplio rango de características, ninguno proporciona una herramienta considerada de bajo costo para nuestro país, que permita a cooperativas o medianas empresas acceder a este herramienta de diagnóstico. Al mismo tiempo, este equipo proporciona una herramienta de base para implementar algoritmos propios para procesamiento over the edge; características que no tienen los actuales equipos en el mercado, los cuales operan con herramientas de procesamiento muy anticuadas.
+Actualmente existen equipos de medición de DP fabricados por empresas extranjeras como TechImp, PD Power Diagnostix, Omnicrom. Si bien esta gama de equipos abarca un amplio rango de características, ninguno proporciona una herramienta considerada de bajo costo para nuestro país, que permita a cooperativas o medianas empresas acceder a este herramienta de diagnóstico. Al mismo tiempo, este equipo proporciona una herramienta de base para implementar algoritmos propios para procesamiento \textit{over the edge}; características que no tienen los actuales equipos en el mercado. 
 
-Entre los equipos existentes se pueden mencionar los siguientes por su similitud.
+Equipos existentes en el mercado de características similares al equipo desarrollado:
 
-
-TechImp Falcon
+TechImp Falcon \citep{falconWeb:1}
 \begin{itemize}
 \item Solución “económica” para monitoreo constante de descargas parciales.
 \item Adquisición automática y generación del patrón de descargas parciales.
 \item Separación de las diferentes actividades de descargas.
-\item Ancho de banda 30 Mhz resolución 12 bits.
+\item Ancho de banda 30 MHz resolución 12 bits.
 \item Conexión ethernet.
 \end{itemize}
 
@@ -90,10 +92,10 @@ TechImp Falcon
 \end{figure}
 
 
-\vspace{10mm}
-PD Power Diagnostix ICMmonitor
+\vspace{15mm}
+PD Power Diagnostix ICMmonitor \citep{pdWeb:1}
 \begin{itemize}
-\item Creación del patrón y display para visualización in-situ.
+\item Creación del patrón y display para visualización \textit{in-situ}.
 \item Analizador de espectro.
 \item Posibilidad de monitoreo remoto.
 \item Conexión TCP.
@@ -107,9 +109,9 @@ PD Power Diagnostix ICMmonitor
 \end{figure}
 
 
-Omicrom MPD600
+Omicrom MPD600 \citep{mpdWeb:1}
 \begin{itemize}
-\item Medicion y analisis de descargas
+\item Medicion y analisis de descargas.
 \item Permite grabar, analizar y mostrar las señales.
 \end{itemize}
 
@@ -122,7 +124,7 @@ Omicrom MPD600
 
 \section{Objetivos y alcance}
 \subsection{Objetivos}
-El objetivo de este trabajo fue generar un equipo adquisidor de descargas parciales de calidad, de bajo costo y de producción nacional. A su vez, se buscó generar las bases para obtener un equipo abierto con capacidad de hacer procesamiento over the edge. 
+El objetivo de este trabajo fue desarrollar un prototipo de un equipo adquisidor de DP de calidad, de bajo costo y de producción nacional. A su vez, se buscó crear las bases para un equipo abierto con capacidad de hacer procesamiento \textit{over the edge}. 
 
 \subsection{Alcance}
 El alcance del trabajo incluyó:
