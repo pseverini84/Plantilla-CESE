@@ -1,13 +1,260 @@
 \chapter{Diseño e implementación} % Main chapter title
 
 \label{Chapter3} % Change X to a consecutive number; for referencing this chapter elsewhere, use \ref{ChapterX}
+Durante este capítulo se realiza una explicación sobre el diseño e implementación del software y hardware del equipo. También se detalla y justifica el motivo de las implementaciones realizadas.
 
 \section{Diseño del Hardware}
+Cruce por cero.
+
+Debido a que la medición de una descarga parcial debe estar relacionada con la senoide de referencia por medio de su momento angular, el equipo fue provisto de un medio para conocer esta variable del sistema de forma constante.
+
+El método elegido para la medición de fase fue un circuito de detección de cruce por cero combinado con un timer interno del microcontrolador. Se optó por este método porque puede ser aislado fácilmente por medio de un optoacoplador y soportar conexiones directas con senoides de referencia de hasta 300 Volts. Otro motivo es que solo al ser de interés el momento angular, un timer de 32 bits brinda mejor resolución que un conversor analogico digital y requiere menos procesamiento.
+
+El circuito diseñado, figura \ref{fig:schZeroCross}, está basado en un optocoplador LTV357 \citep{opto:ltv357}, este presenta una aislación de 3750 Vrms entre entrada y salida. La polarización del led de entrada se realizó por medio de un circuito RC que le proporciona un rango dinámico de tensión de entrada entre 50 V y 300 V y evita gran disipación de potencia. 
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=130mm]{./Figures/schZeroCross.png}
+	\caption{Entrada de detección de cruce por cero para la senoide de referencia.}
+	\label{fig:schZeroCross}
+\end{figure}
+
+El optoacoplador elegido solo posee un led, por lo que será polarizado solo durante un semiciclo esto permitirá luego reconocer de forma sencilla el semiciclo positivo y negativo. El diodo D1 protege al diodo interno del optoacoplador cuando se encuentra en polarizado inversa.
+
+La salida del circuito se encuentra conectada a un pull-up y a un pin del microprocesador que permite el mapeo de interrupciones externas.
+
+\vspace{10mm}
+Filtro.
+
+Para la medición de la descarga parcial se utilizó el conversor analogico digital de alta velocidad, del LPC4370 \citep{micro:lpc4370}, configurado en modo diferencial. En el capítulo 2 se explicó la importancia de un filtro \textit{anti-aliasing} para evitar interferencia de bandas indeseadas en la medición. Ya que el conversor analogico digital tiene una velocidad máxima de 80 MSPS, el filtro fue calculado para tener una frecuencia de corte igual a 40MHz. Figura \ref{fig:respFrec}. 
+
+\vspace{5mm}
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=130mm]{./Figures/respFrec.png}
+	\caption{Respuesta en frecuencia deseada.}
+	\label{fig:respFrec}
+\end{figure}
+
+\vspace{5mm}
+
+El filtro implementado es un filtro \textit{Butterworth} diferencial de 3er orden con una atenuación de -3dB en 40 MHz, figura \ref{fig:schFiltro}. El ingreso de la señal al filtro se realiza por medio de dos capacitores de desacople y un transformador 1:1, esto permite conectar un sensor inductivo en modo común o diferencial. Puede observarse que al final del filtro se incluye un divisor resistivo y un enclavamiento de diodos para proteger al periférico de sobretensiones. El divisor permite atenuar linealmente la señal en caso de requerir mayor rango dinámico de entrada, también podría servir en caso de requerir agregar una etapa más al filtro.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=140mm]{./Figures/schFiltro.png}
+	\caption{Filtro diferencial \textit{Butterworth} de 3er orden. Frecuencia de corte 40Mhz.}
+	\label{fig:schFiltro}
+\end{figure}
+
+\vspace{15mm}
+
+Esquemático general 
+
+El módulo central es el microprocesador LPC4370, figura \ref{fig:schCentral}, a este llegan la señal analogica proveniente del filtro diferencial y la entrada aislada de la detección del cruce por cero. Puede observarse los componentes necesarios para el funcionamiento reloj de tiempo real (RTC), estos son un cristal de 32 KHz y una batería.
+
+\vspace{10mm}
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=140mm]{./Figures/schCentral.png}
+	\caption{Procesador y RTC.}
+	\label{fig:schCentral}
+\end{figure}
+
+\vspace{15mm}
+
+Fuente
+
+La fuente de alimentación, figura \ref{fig:schPwr}, fue diseñada por medio de dos reguladores LDO. Se utilizó el regulador de 3.3 V junto con dos filtros PI para generar dos ramas, una para los módulos digitales y otra los módulos analogicos. El regulador de 1.1 V es solo utilizado para generar un tensión de enclavamiento para el circuito de protección de la etapa analogica.
+
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=140mm]{./Figures/schPwr.png}
+	\caption{Fuentes de alimentación.}
+	\label{fig:schPwr}
+\end{figure}
+
+\vspace{10mm}
+
+Comunicaciones
+
+Como periféricos de comunicación, figura \ref{fig:schCom}, se proporcionó un puerto 232 para acceder a la interfaz del sistema, también se incluyeron dos puertos USB de alta velocidad uno para conexión directa de un pendrive y otro para conexión \textit{on-the-go} para futuras opciones.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=140mm]{./Figures/schCom.png}
+	\caption{Circuitos de comunicaciones.}
+	\label{fig:schCom}
+\end{figure}
+
+\newpage
 
 \section{Diseño del Firmware}
 
+Módulos del firmware
+
+Si bien el LPC4370 dispone de tres núcleos, este trabajo se realizó utilizando solo el cortex M4 dejando libres dos cortex M0. De esta forma quedan recursos disponibles para implementar futuros procesamientos de la señal. 
+
+Inicialmente se había planificado utilizar un sistema operativo de tiempo real, pero se descartó debido a que la ejecución de tareas durante el proceso de disparo del \textit{trigger} generan \textit{jitter} al comienzo de la adquisición. Las soluciones planteadas para este problema fueron detener el scheduler en momentos específicos, portar el kernel de freertos tickless para este procesador o evitar el uso de un sistema operativo y realizar el software bajo el patrón de software \textit{superpoll}. Por ser una solución de menor complejidad y debido al tiempo disponible para realizar el trabajo, la última alternativa fue la elegida.
+
+El firmware fue escrito en lenguaje C y se dividió en varios módulos funcionales que encapsulan su comportamiento, figura \ref{fig:firmBloques}. La interacción entre los módulos se realizó por medio de funciones públicas utilizadas como interfaces. 
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=130mm]{./Figures/firmBloques.png}
+	\caption{Diagrama en bloques de los módulos de firmware}
+	\label{fig:firmBloques}
+\end{figure}
+
+\vspace{10mm}
+
+Administración de memoria
+
+La gestión de memoria interna fue una pieza clave para el correcto funcionamiento del sistema. El conversor AD junto con su acceso directo a memoria (DMA) generan muestras de 12 bits a una tasa de 80 Mhz. Debido a la arquitectura del ARM los accesos al mismo banco de memoria no pueden realizarse de forma simultánea. Es por eso que para asegurar que no se pierdan muestras de la adquisición, se asignó al periférico ADC un banco físico de memoria exclusivo, figura \ref{fig:firmMemoria}.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=100mm]{./Figures/firmMemoria.png}
+	\caption{Diagramas de bloque general de distribución de memoria}
+	\label{fig:firmMemoria}
+\end{figure}
+
+Un disparo de \textit{trigger} se realiza por medio de una comparación con un umbral establecido previamente. Para poder realizar esta comparación el periférico necesita adquirir constantemente, esto genera un flujo de datos que debe administrarse. Para resolver esto se utilizó una cola circular en memoria en donde el DMA puede copiar los datos adquiridos de forma constante eliminado siempre la muestra más antigua. Cuando el \textit{trigger} es disparado se almacena el puntero a la posición inicial y cuando la cola completa la vuelta se finaliza la adquisición. Esto proporciona una ventana de \textit{N} muestras que puede ser propagada a otras capas de software para su correcta manipulación. 
+
+Por practicidad el modulo HSASC administra su memoria como un único banco, figura \ref{fig:firmBanco}, este banco a su vez es dividido en \textit{slots}. Todos los slots son de igual tamaño y permiten una adquisición de forma ininterrumpida a partir de un disparo de trigger. Una vez concluida la adquisición del \textit{slot},  en caso de quedar slots libres el sistema se rearma a la espera de un próximo disparo. En caso de haber completado todos los \textit{slots} del banco de memoria se procede a procesar y almacenar.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=100mm]{./Figures/firmBanco.png}
+	\caption{Banco de memoria}
+	\label{fig:firmBanco}
+\end{figure}
+
+\vspace{10mm}
+DP
+
+Dentro de este módulo se realiza el control de las adquisiciones de DP y el posterior procesamiento y conformación del patrón. Este es el módulo central, funciona como consumidor de las funciones que implementan los demás módulos.
+
+\vspace{10mm}
+
+Storage
+
+Este módulo se encarga de encapsular el funcionamiento del pendrive y su sistema de archivos. Implementa el sistema de archivos FAT32 por medio de la librería FatFs \citep{chanWeb:1} combinado con los drivers USB provistos por NXP.
+
+\vspace{10mm}
+
+Cruce por cero
+
+La detección de cruce por cero es realizada por una interrupción externa configurada por flanco ascendente. En la rutina de interrupción se inicia un timer que será el encargado de contabilizar el tiempo de forma constante entre cruces. Consultando este timer en cualquier momento y desde cualquier parte del código puede conocerse por regla de tres simple la fase de la senoide de referencia. En la figura \ref{fig:firmFSM} puede verse el diagrama de la máquina de estado encargada de controlar el momento angular.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=100mm]{./Figures/firmZCFSM.png}
+	\caption{FSM control de fase}
+	\label{fig:firmFSM}
+\end{figure}
+
+\newpage
+
 \section{Interfaz de usuario}
+El equipo dispone de una interfaz de usuario desarrollada para funcionar en cualquier terminal estándar CPL 80, esta es accesible por medio de un puerto serial bajo una configuración 115200,8,n,1.
+
+La interfaz permite configurar el equipo, realizar, navegar y visualizar mediciones. Los comandos se componen de una palabra principal y en algunos casos permiten parámetros adicionales. 
+
+\vspace{5mm}
+
+Existen 4 grupos de comandos:
+\begin{itemize}
+\item  de configuración.
+\item  de navegación.
+\item  de visualización.
+\item de estado. 
+
+\end{itemize}
+
+\vspace{5mm}
+
+Breve descripción de los comandos:
+\begin{itemize}
+\item mode -a [minutos]: permite activar el modo de adquisición automático con un intervalo de tiempo [minutos]. Este modo inicializa la creación de un patrón de DP cada n minutos.
+\item mode -i [g-p] : Inicializa la creación de un patrón de DP. Con el parámetro [g] lo grafica por medio de caracteres ASCII y no es guardado. Con el parámetro [p] el patrón es y el muestreo de las descargas parciales es guardado en el pendrive.
+\item mode -d : Desarma el trigger y en caso de haber un patrón de DP en proceso de creación lo guarda.
+\item dccal: Calibración para eliminar componente de continua.
+\item conf -t [mv] : Permite configurar el valor del trigger en [mv]. El mismo valor será considerado como absoluto y será establecido como trigger positivo y negativo.
+\item conf -q [puntos] : Permite configurar la cantidad de puntos (DP) para un patrón de DP (hasta 1500). 
+\item conf -s [muestras] : Permite configurar la cantidad de muestras por DP (hasta 968).
+\item time -g : Imprime el valor de fecha y hora en pantalla bajo el formato hh:mm:ss DD/MM/AAAA.
+\item time -s [hh:mm:ss DD/MM/AAAA]: Permite configurar la fecha y hora.
+\item lspd : Lista todos los patrones de dp existentes en el pendrive.
+\item lspd -f [AAAAMMDDhhmm]: Lista los patrones existentes en el pendrive que corresponden con el filtro elegido, puede utilizarse “?” a modo de comodín.
+\item dwnpd -g [AAAAMMDDhhmm] : Permite graficar por medio de caracteres ASCII el patrón de descargas parciales seleccionado.
+\item dwnpd -t [AAAAMMDDhhmm] : Permite enviar en forma de tabla el patrón seleccionado.
+\item restart : Reinicia el cpu
+\item info -s : Brinda información sobre el sistema
+\item ?: Información sobre los comandos.
+\end{itemize}
+
+\vspace{5mm}
+
+La interfaz dispone de un modo de visualización de patrones de descarga parcial generado por caracteres \textit{ascii}, figura \ref{fig:firmInterfaz}. Debido a la baja resolución existente en este modo, se utilizaron diferentes caracteres para representar densidad de DP en un área del patrón determinada. Este modo es especialmente práctico para configuración o consultas remotas. También puede solicitarse que una DP sea visualizada en forma de tabla.
+
+\vspace{5mm}
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=130mm]{./Figures/firmInterfaz.png}
+	\caption{Patrón de DP por terminal}
+	\label{fig:firmInterfaz}
+\end{figure}
+
+\vspace{10mm}
+
+Los archivos generados por cada patrón de DP son tres, figura \ref{fig:firmFiles}. Un archivo .info que contiene los parámetros de la medición realizada, un archivo .mem que contiene los datos crudos con las formas de onda de las dp y un archivo .csv. Este último archivo puede ser abierto por cualquier planilla de cálculo y contiene el patrón de DP representado en una tabla con una columna pico y otra fase.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=60mm]{./Figures/firmFiles.png}
+	\caption{Archivos generados como resultado de la creación de un patrón}
+	\label{fig:firmFiles}
+\end{figure}
+
 
 \section{Herramientas de usuario}
 
+Fueron generados dos scripts en Python3, uno permite generar un patrón de DP de forma gráfica a partir de una archivo .csv. El otro permite reconstruir las señales obtenidas de cada DP a partir de una archivo .mem y generar un gráfico por cada una.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=140mm]{./Figures/firmAllFiles.png}
+	\caption{Árbol completo de archivos luego del procesamiento con scripts}
+	\label{fig:firmAllFiles}
+\end{figure}
+
 \section{Prototipo funcional}
+
+Un prototipo funcional fue montado como validador tecnológico y a su vez para poder llevar a cabo los ensayos. El mismo fue construido utilizando una placa de desarrollo LPC link2, figura \ref{fig:hardLPC}. A pesar de no estar disponibles todos los pines del microprocesador la placa fue modificada para poder acceder a todos los periféricos requeridos en este trabajo. La única restricción encontrada fue el acceso a la alimentación independiente del reloj de tiempo real lo cual hace que, en este prototipo, la fecha y hora se pierda siempre que falte el suministro eléctrico. 
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=90mm]{./Figures/hardLPC.png}
+	\caption{LPC link2}
+	\label{fig:hardLPC}
+\end{figure}
+
+\vspace{10mm}
+
+Como tareas de modificación se removieron los filtros existentes en modo común de las entradas analogicas, para que no afecten a los nuevos filtros diferenciales conectados. Se agregó un cristal de 32 Khz como oscilador del reloj de tiempo real.
+
+La placa de desarrollo solo dispone de un puerto USB diseñado para ser utilizado como device y ser conectado a la PC. El circuito fue modificado para funcionar como host inyectando alimentación desde la fuente. También se utilizó un adaptador micro USB a USB A para poder conectar un pendrive.  
+
+Para finalizar el prototipo funcional, figura \ref{fig:hardProto}, se agregó una placa adicional con el filtro diferencial y la etapa de optoacoplado. La conexiones entre los dos circuitos impresos fueron realizadas por medio de los puertos de expansión del LPC link2. 
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=80mm]{./Figures/hardProto.png}
+	\caption{Prototipo funcional}
+	\label{fig:hardProto}
+\end{figure}

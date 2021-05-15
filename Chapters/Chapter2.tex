@@ -49,7 +49,7 @@ Los requerimientos 23 y 24 fueron modificados debido a que el almacenamiento de 
 
 \section{Descripción general del sistema}
 
-En la figura \ref{fig:bloques} se brinda una introducción de los módulos principales que abarcan el sistema y su interacción, por medio de este se busca brindar una mejor interpretación de algunos temas abordados en este capítulo.
+En la figura \ref{fig:bloques} se brinda una introducción de los módulos principales que abarcan el sistema y su interacción, por medio de esta se busca brindar una mejor interpretación de algunos temas abordados en este capítulo.
 
 \begin{figure}[ht]
 	\centering
@@ -61,7 +61,7 @@ En la figura \ref{fig:bloques} se brinda una introducción de los módulos princ
 El objetivo principal del equipo consiste en adquirir, almacenar y procesar señales de DPs para posteriormente, junto a la senoide de referencia, conformar el diagrama de magnitud-fase o patrón de DP.
 
 \section{Aislación óptica}
-Un optoacoplador es un dispositivo que vincula de forma óptica un diodo led y un fototransistor a través  de material aislante transparente. Utilizados como interfaz entre circuitos con diferentes potenciales de masa, los optoacopladores reemplazan la aislación por medio de transformadores y relés. También son utilizados para aislar circuitos lógicos y líneas de potencia evitando cambios de impedancia, mejorando la capacidad de aislación entre entrada y salida y facilitando la eliminación del ruido. Para este equipo se seleccionó el optoacoplador LTV357 de la empresa liteon, el mismo cumple con los requisitos de ser de bajo costo, tener una aislación de 3750 Vrms y una respuesta lineal hasta 2 KHz de frecuencia.\citep{opto:appnote},\citep{opto:ltv357}
+Un optoacoplador es un dispositivo que vincula de forma óptica un diodo led y un fototransistor a través  de material aislante transparente. Utilizados como interfaz entre circuitos con diferentes potenciales de masa, los optoacopladores reemplazan la aislación por medio de transformadores y relés. También son utilizados para aislar circuitos lógicos y líneas de potencia evitando cambios de impedancia, mejorando la capacidad de aislación entre entrada y salida y facilitando la eliminación del ruido \citep{opto:appnote}. Para este equipo se seleccionó el optoacoplador LTV357 \citep{opto:ltv357} de la empresa liteon, el mismo cumple con los requisitos de ser de bajo costo, tener una aislación de 3750 Vrms y una respuesta lineal hasta 2 KHz de frecuencia.
 
 \begin{figure}[ht]
 	\centering
@@ -73,12 +73,12 @@ Un optoacoplador es un dispositivo que vincula de forma óptica un diodo led y u
 \section{Filtrado y adaptación}
 Una etapa de filtrado y adaptación es un punto crítico para cualquier diseño de adquisición de señales analógicas. La señal proveniente de los sensores puede contener componentes de frecuencia fuera del ancho de banda de interés. También es posible que los niveles de tensión de la señal no utilicen al máximo el rango dinámico de entrada perdiendo bits de conversión. La saturación por sobretensión también es un elemento que perjudica a la calidad de las mediciones y en algunos casos puede destruir al equipo. 
 
-La etapa de filtrado está diseñada para dejar pasar las frecuencias dentro de la banda de interés atenuando en gran parte a todas aquellas fuera de rango.
+La etapa de filtrado está diseñada para dejar pasar las frecuencias dentro de la banda de interés, atenuando en gran parte a todas aquellas fuera de rango.
 
 La etapa de adaptación permite llevar los niveles de tensión de entrada al máximo rango dinámico permitido, esto puede realizarse por medio de amplificación o atenuación de la señal dependiendo el caso. En esta etapa también se implementan protecciones por sobretensión que puedan dañar al equipo, normalmente diseñadas con diodos de alta velocidad.
 
 \section{Procesamiento}
-La etapa de procesamiento es la encargada de orquestar todos los módulos del sistema. El equipo utiliza como microcontrolador principal un LPC4370 de la firma NXP. La elección fue determinada porque posee un conversor analógico digital de alta velocidad (80 MSPS) combinado con un procesador ARM cortex M4 y dos ARM cortes M0. También incluye en la versión con encapsulado TFBGA100 dos periféricos USB de alta velocidad, puerto serie, reloj de tiempo real y entradas de propósito general \citep{micro:lpc4370}.
+La etapa de procesamiento es la encargada de orquestar todos los módulos del sistema. El equipo utiliza como microcontrolador principal un LPC4370 \citep{micro:lpc4370} de la firma NXP. La elección fue determinada porque posee un conversor analógico digital de alta velocidad (80 MSPS) combinado con un procesador ARM cortex M4 y dos ARM cortex M0. También incluye en la versión con encapsulado TFBGA100 dos periféricos USB de alta velocidad, puerto serie, reloj de tiempo real y entradas de propósito general.
 
 Fue determinante para su elección el periférico ADCHS y su bajo costo. Gracias a que los principales módulos del desarrollo pudieron ser resueltos con los periféricos internos, solo fue necesario implementar de forma externa la etapa de aislación óptica y la etapa de adaptación y filtrado de señal.
 
@@ -120,12 +120,12 @@ La señal analógica debe ser muestreada en intervalos de tiempo discretos ts, e
 
 Criterios de Nyquist
 \begin{itemize}
-\item Una señal analógica con un ancho de banda de \textit{fa} debe ser sampleado a una tasa de muestreo \textit{fs>2fa} para evitar pérdida de información.
+\item Una señal analógica con un ancho de banda de \textit{fa} debe ser muestrado a una tasa de muestreo \textit{fs>2fa} para evitar pérdida de información.
 \item Si \textit{fs<2fa} entonces un fenómeno llamado \textit{aliasing} ocurre en el ancho de banda de la señal
 \end{itemize}
 
 Con el fin de comprender la implicación del \textit{aliasing} se deben considerar los cuatro casos representados en la figura \ref{fig:muestreo2} de una señal senoidal muestreada en el dominio del tiempo.
-En el caso 1 está claro que la cantidad de muestras es adecuada para preservar la información. En el caso 2 solo se realizaron 4 muestras por ciclo, pero aun así es una cantidad adecuada para preservar la información. En el caso 3 se representa un caso de la condición límite ambiguo donde \textit{fs=2fa}. Si la relación entre los puntos muestreados y la señal fuese tal que el muestreo coincidiera con los cruces por cero toda la información se perdería. En el caso 4 la figura representa la situación donde \textit{fs<2fa} y la información obtenida de las muestras dan como resultado una senoide de frecuencia inferior a \textit{fs/2}, en este caso una frecuencia fuera de banda se entrelazo con ancho de banda de Nyquist. 
+En el caso 1 está claro que la cantidad de muestras es adecuada para preservar la información. En el caso 2 solo se realizaron 4 muestras por ciclo, pero aun así es una cantidad adecuada para preservar la información. En el caso 3 se representa un caso de la condición límite ambiguo donde \textit{fs=2fa}. Si la relación entre los puntos muestreados y la señal fuese tal que el muestreo coincidiera con los cruces por cero, toda la información se perdería. En el caso 4 la figura representa la situación donde \textit{fs<2fa} y la información obtenida de las muestras dan como resultado una senoide de frecuencia inferior a \textit{fs/2}, en este caso una frecuencia fuera de banda se entrelazo con ancho de banda de Nyquist. 
 
 \begin{figure}[ht]
 	\centering
@@ -134,7 +134,7 @@ En el caso 1 está claro que la cantidad de muestras es adecuada para preservar 
 	\label{fig:muestreo2}
 \end{figure}
 
-Por lo expuesto anteriormente un conversor analógico digital debe ser precedido por un filtro anti-aliasing, figura \ref{fig:muestreo3}, que tenga suficiente atenuación a partir de la frecuencia de corte \textit{fs/2} para prevenir que frecuencias fuera de banda indeseadas se entrelazan
+Por lo expuesto anteriormente, un conversor analógico digital debe ser precedido por un filtro \textit{anti-aliasing}, figura \ref{fig:muestreo3}, que tenga suficiente atenuación a partir de la frecuencia de corte \textit{fs/2} para prevenir que se entrelacen frecuencias fuera de banda.
 
 \begin{figure}[ht]
 	\centering
