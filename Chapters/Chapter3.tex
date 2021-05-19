@@ -38,7 +38,7 @@ En la tabla \ref{tab:corriente} se observa que la corriente \textit{If} máxima 
 
 \begin{table}[h]
 \centering
-\caption[caption corto]{Corrientes de polarización}
+\caption[Corrientes de polarización]{Corrientes de polarización}
 \begin{tabular}{l c c c c}
 \toprule
 \textbf{Vpp} & \textbf{If(mA) @ 1°} & \textbf{Ic(mA) @ 1°} & \textbf{If(mA) @ 90°} & \textbf{Ic(mA) @ 90°}\\
@@ -181,12 +181,12 @@ Existen 4 grupos de comandos:
 
 Breve descripción de los comandos:
 \begin{itemize}
-\item mode -a [minutos]: permite activar el modo de adquisición automático con un intervalo de tiempo [minutos]. Este modo inicializa la creación de un patrón de DP cada \textit{n} minutos.
-\item mode -i [g-p] : Inicializa la creación de un patrón de DP. Con el parámetro [g] lo grafica por medio de caracteres ASCII y no es guardado. Con el parámetro [p] el patrón es y el muestreo de las descargas parciales es guardado en el pendrive.
+\item mode -a [m]: permite activar el modo de adquisición automático con un intervalo de tiempo [minutos]. Este modo inicializa la creación de un patrón de DP cada \textit{m} minutos.
+\item mode -i [g-p] : Inicializa la creación de un patrón de DP. Con el parámetro [g] lo grafica por medio de caracteres ASCII y no es guardado. Con el parámetro [p] el patrón y el muestreo de las descargas parciales son guardados en el pendrive.
 \item mode -d : Desarma el trigger y en caso de haber un patrón de DP en proceso de creación lo guarda.
 \item dccal: Calibración para eliminar componente de continua.
-\item conf -t [mv] : Permite configurar el valor del trigger en [mV]. El mismo valor será considerado como absoluto y será establecido como trigger positivo y negativo.
-\item conf -q [puntos] : Permite configurar la cantidad de puntos (DP) para un patrón de DP (hasta 1500). 
+\item conf -t [mV] : Permite configurar el valor del trigger en [mV]. El mismo valor será considerado como absoluto y será establecido como trigger positivo y negativo.
+\item conf -q [puntos] : Permite configurar la cantidad de puntos (DP) que constituirán un patrón de DP (hasta 1500). 
 \item conf -s [muestras] : Permite configurar la cantidad de muestras por DP (hasta 968).
 \item time -g : Imprime el valor de fecha y hora en pantalla bajo el formato hh:mm:ss DD/MM/AAAA.
 \item time -s [hh:mm:ss DD/MM/AAAA]: Permite configurar la fecha y hora.
@@ -240,7 +240,7 @@ Dentro de este módulo tambien se realiza el control de fase. La detección de c
 
 \subsection{HSADC}
 
-La gestión de memoria interna fue una pieza clave para el correcto funcionamiento del sistema. El conversor analógico digital junto con su acceso directo a memoria (DMA) generan muestras de 12 bits a una tasa de 80 Mhz. Debido a la arquitectura del cortex M4, los accesos al mismo banco de memoria no pueden realizarse de forma simultánea. Para asegurar que no se pierdan muestras de la adquisición, se asignó al periférico ADC un banco de memoria exclusivo, figura \ref{fig:firmMemoria}.
+La gestión de memoria interna fue una pieza clave para el correcto funcionamiento del sistema. El conversor analógico digital junto con su acceso directo a memoria (DMA) generan muestras de 12 bits a una tasa de 80 MHz. Debido a la arquitectura del cortex M4, los accesos al mismo banco de memoria no pueden realizarse de forma simultánea. Para asegurar que no se pierdan muestras de la adquisición, se asignó al periférico ADC un banco de memoria exclusivo, figura \ref{fig:firmMemoria}.
 
 \begin{figure}[ht]
 	\centering
