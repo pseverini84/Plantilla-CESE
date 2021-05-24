@@ -55,6 +55,16 @@ headsepline, % Uncomment to get a line under the header
 
 \keywords{Sistemas embebidos, FIUBA} % Keywords for your thesis, print it elsewhere with \keywordnames
 
+
+\usepackage[usestackEOL]{stackengine}
+\def\useanchorwidth{T}
+\newcommand\vstrut[1][]{\makebox[0pt]{\rule[-1ex]{1pt}{2ex}}\mnote{#1}}
+\def\mnote#1{\brlap{$\scriptstyle#1$}}
+\def\dx#1{\hbox to #1 {}}
+\def\dline#1{\hbox to #1 {\hrulefill}}
+\def\dubrace#1{\hbox to #1 {\upbracefill}}
+\def\ddbrace#1{\hbox to #1 {\downbracefill}}
+
 \begin{document}
 
 
