@@ -181,22 +181,22 @@ Existen 4 grupos de comandos:
 
 Breve descripción de los comandos:
 \begin{itemize}
-\item mode -a [m]: Permite activar el modo de adquisición automático con un intervalo de tiempo [minutos]. Este modo inicializa la creación de un patrón de DP cada \textit{m} minutos.
-\item mode -i [g-p] : Inicializa la creación de un patrón de DP. Con el parámetro [g] lo grafica por medio de caracteres ASCII y no es guardado. Con el parámetro [p] el patrón y el muestreo de las descargas parciales son guardados en el pendrive.
-\item mode -d : Desarma el trigger y en caso de haber un patrón de DP en proceso de creación lo guarda.
-\item dccal: Calibración para eliminar componente de continua.
-\item conf -t [mV] : Permite configurar el valor del trigger en [mV]. El mismo valor será considerado como absoluto y será establecido como trigger positivo y negativo.
-\item conf -q [puntos] : Permite configurar la cantidad de puntos (DP) que constituirán un patrón de DP (hasta 1500). 
-\item conf -s [muestras] : Permite configurar la cantidad de muestras por DP (hasta 968).
-\item time -g : Imprime el valor de fecha y hora en pantalla bajo el formato hh:mm:ss DD/MM/AAAA.
-\item time -s [hh:mm:ss DD/MM/AAAA]: Permite configurar la fecha y hora.
-\item lspd : Lista todos los patrones de DP existentes en el pendrive.
-\item lspd -f [AAAAMMDDhhmm]:  Lista los patrones existentes en el pendrive y los filtra según el año (AAAA), mes (MM), día (DD), horas (hh), minutos (mm) y segundos (ss) ingresados. Cualquier atributo puede reemplazarse por el caracter ‘?’ para ignorar el filtro.
-\item dwnpd -g [AAAAMMDDhhmm] : Permite graficar por medio de caracteres ASCII el patrón de descargas parciales seleccionado.
-\item dwnpd -t [AAAAMMDDhhmm] : Permite enviar en forma de tabla el patrón seleccionado.
-\item restart : Reinicia el cpu
-\item info -s : Brinda información sobre el sistema
-\item ?: Información sobre los comandos.
+\item mode -a [m]: permite activar el modo de adquisición automático con un intervalo de tiempo [minutos]. Este modo inicializa la creación de un patrón de DP cada \textit{m} minutos.
+\item mode -i [g-p] : inicializa la creación de un patrón de DP. Con el parámetro [g] lo grafica por medio de caracteres ASCII y no es guardado. Con el parámetro [p] el patrón y el muestreo de las descargas parciales son guardados en el pendrive.
+\item mode -d : desarma el trigger y en caso de haber un patrón de DP en proceso de creación lo guarda.
+\item dccal: calibración para eliminar componente de continua.
+\item conf -t [mV] : permite configurar el valor del trigger en [mV]. El mismo valor será considerado como absoluto y será establecido como trigger positivo y negativo.
+\item conf -q [puntos] : permite configurar la cantidad de puntos (DP) que constituirán un patrón de DP (hasta 1500). 
+\item conf -s [muestras] : permite configurar la cantidad de muestras por DP (hasta 968).
+\item time -g : imprime el valor de fecha y hora en pantalla bajo el formato hh:mm:ss DD/MM/AAAA.
+\item time -s [hh:mm:ss DD/MM/AAAA]: permite configurar la fecha y hora.
+\item lspd : lista todos los patrones de DP existentes en el pendrive.
+\item lspd -f [AAAAMMDDhhmm]:  lista los patrones existentes en el pendrive y los filtra según el año (AAAA), mes (MM), día (DD), horas (hh), minutos (mm) y segundos (ss) ingresados. Cualquier atributo puede reemplazarse por el caracter ‘?’ para ignorar el filtro.
+\item dwnpd -g [AAAAMMDDhhmm] : permite graficar por medio de caracteres ASCII el patrón de descargas parciales seleccionado.
+\item dwnpd -t [AAAAMMDDhhmm] : permite enviar en forma de tabla el patrón seleccionado.
+\item restart : reinicia el cpu.
+\item info -s : brinda información sobre el sistema
+\item ?: información sobre los comandos.
 \end{itemize}
 
 \vspace{5mm}

@@ -13,37 +13,37 @@ El trabajo realizado es un equipo adquisidor de DP que tiene como cliente a la U
 A continuación se listan los requerimientos acordados al iniciar el trabajo. Cabe destacar que todos fueron cumplimentados en su totalidad con excepción de los requerimientos 23 y 24 que fueron modificados, de mutuo acuerdo con el cliente, sin generar deterioro alguno en las características del equipo.
 
 \begin{itemize}
-\item Req 1: El dispositivo deberá, mediante el procesamiento de las adquisiciones, detectar los picos máximos de los pulsos de DP y representarlos sobre una senoide de referencia de frecuencia industrial - 50 Hertz - en fase con la tensión de ensayo (generar un patrón de DP).
-\item Req 2: El dispositivo deberá funcionar como un sistema \textit{stand-alone}.
-\item Req 3: El dispositivo deberá mantener la fecha y hora por medio de un RTC.
-\item Req 4: El dispositivo deberá tener un puerto de acceso serial (preferentemente diferencial) para configuración y acceso a datos remoto.
-\item Req 5: El dispositivo deberá contar con un puerto USB para la descarga de los patrones de DP.
-\item Req 6: El dispositivo deberá permitir modificar el umbral de disparo a partir del cual se comenzará a adquirir una señal.
-\item Req 7: El dispositivo deberá permitir modificar la cantidad de muestras que serán adquiridas por disparo (máximo 1000).
-\item Req 8: El dispositivo deberá permitir modificar la cantidad de disparos (máximo 1000) que componen a un patrón de DP.
-\item Req 9: El dispositivo deberá permitir configurar el RTC.
-\item Req 10: El dispositivo deberá permitir planificar la generación automática de un patrón DP cada periodos múltiplos de 1 hora (calendario).
-\item Req 11: El dispositivo deberá permitir generar un patrón de DP con los parámetros configurados a demanda y transferirlo por el puerto serie.
-\item Req 12: El dispositivo deberá permitir poner al sistema en modo “ARMADO” o “ DESARMADO”.
-\item Req 13: En modo “ARMADO” el dispositivo deberá cumplir con las adquisiciones preestablecidas por calendario.
-\item Req 14: En modo “DESARMADO” el dispositivo no estará operativo.
-\item Req 15: La entrada de señal de referencia debe poder detectar los cruces por cero de una senoide de 50 Hz, y saber su polaridad.
-\item Req 16: La entrada de señal de referencia debe ser opto-acoplada.
-\item Req 17: El dispositivo deberá llevar un contador en milisegundos a partir de la señal de cruce por cero. De forma tal que se pueda saber en todo momento si está transcurriendo un semiciclo positivo o negativo y saber cuánto tiempo transcurrió desde su inicio.
-\item Req 18: Se deben poder adquirir señales con una ancho de banda entre 0.1 MHz y 40 MHz con una resolución mínima de 8 bits.
-\item Req 19: La amplitud máxima de la señal de entrada será de 1 Vpp.
-\item Req 20: La entrada para el sensor analógico deberá ser de 50 ohms diferencial.
-\item Req 21: El dispositivo deberá detectar cuando la señal muestreada supere el umbral de disparo, si esto sucediera las siguientes muestras (cantidad definida anteriormente en la configuración) deberán ser comparadas entre sí y preservar la de mayor magnitud. El valor obtenido deberá ser almacenado en memoria, junto con un timestamp, la polaridad del semiciclo de referencia y su momento angular. Este proceso debe ser repetido hasta que se cumplan los disparos que componen un patrón DP.
-\item Req 22: Deberá indicará su estado “ARMADO - DESARMADO” por medio de un led de estado.
-\item Req 23: Deberá permitir “ARMAR - DESARMAR” al sistema por medio de una tecla física.
-\item Req 24: Deberá realizar la acción de transferir a un pendrive el contenido total de la memoria interna por medio de una tecla fısica.
-\item Req 25: El dispositivo deberá listar todos los patrones de DP almacenados bajo el siguiente identificador “AAMMDDhhmm” en base a la fecha de generación del patrón.
-\item Req 26: El dispositivo deberá permitir seleccionar al patrón por medio de su identificador y solicitar su transferencia por puerto serie.
+\item Req 1: el dispositivo deberá, mediante el procesamiento de las adquisiciones, detectar los picos máximos de los pulsos de DP y representarlos sobre una senoide de referencia de frecuencia industrial - 50 Hertz - en fase con la tensión de ensayo (generar un patrón de DP).
+\item Req 2: el dispositivo deberá funcionar como un sistema \textit{stand-alone}.
+\item Req 3: el dispositivo deberá mantener la fecha y hora por medio de un RTC.
+\item Req 4: el dispositivo deberá tener un puerto de acceso serial (preferentemente diferencial) para configuración y acceso a datos remoto.
+\item Req 5: el dispositivo deberá contar con un puerto USB para la descarga de los patrones de DP.
+\item Req 6: el dispositivo deberá permitir modificar el umbral de disparo a partir del cual se comenzará a adquirir una señal.
+\item Req 7: el dispositivo deberá permitir modificar la cantidad de muestras que serán adquiridas por disparo (máximo 1000).
+\item Req 8: el dispositivo deberá permitir modificar la cantidad de disparos (máximo 1000) que componen a un patrón de DP.
+\item Req 9: el dispositivo deberá permitir configurar el RTC.
+\item Req 10: el dispositivo deberá permitir planificar la generación automática de un patrón DP cada periodos múltiplos de 1 hora (calendario).
+\item Req 11: el dispositivo deberá permitir generar un patrón de DP con los parámetros configurados a demanda y transferirlo por el puerto serie.
+\item Req 12: el dispositivo deberá permitir poner al sistema en modo “ARMADO” o “ DESARMADO”.
+\item Req 13: en modo “ARMADO” el dispositivo deberá cumplir con las adquisiciones preestablecidas por calendario.
+\item Req 14: en modo “DESARMADO” el dispositivo no estará operativo.
+\item Req 15: la entrada de señal de referencia debe poder detectar los cruces por cero de una senoide de 50 Hz, y saber su polaridad.
+\item Req 16: la entrada de señal de referencia debe ser opto-acoplada.
+\item Req 17: el dispositivo deberá llevar un contador en milisegundos a partir de la señal de cruce por cero. De forma tal que se pueda saber en todo momento si está transcurriendo un semiciclo positivo o negativo y saber cuánto tiempo transcurrió desde su inicio.
+\item Req 18: se deben poder adquirir señales con una ancho de banda entre 0.1 MHz y 40 MHz con una resolución mínima de 8 bits.
+\item Req 19: la amplitud máxima de la señal de entrada será de 1 Vpp.
+\item Req 20: la entrada para el sensor analógico deberá ser de 50 ohms diferencial.
+\item Req 21: el dispositivo deberá detectar cuando la señal muestreada supere el umbral de disparo, si esto sucediera las siguientes muestras (cantidad definida anteriormente en la configuración) deberán ser comparadas entre sí y preservar la de mayor magnitud. El valor obtenido deberá ser almacenado en memoria, junto con un timestamp, la polaridad del semiciclo de referencia y su momento angular. Este proceso debe ser repetido hasta que se cumplan los disparos que componen un patrón DP.
+\item Req 22: deberá indicará su estado “ARMADO - DESARMADO” por medio de un led de estado.
+\item Req 23: deberá permitir “ARMAR - DESARMAR” al sistema por medio de una tecla física.
+\item Req 24: deberá realizar la acción de transferir a un pendrive el contenido total de la memoria interna por medio de una tecla fısica.
+\item Req 25: el dispositivo deberá listar todos los patrones de DP almacenados bajo el siguiente identificador “AAMMDDhhmm” en base a la fecha de generación del patrón.
+\item Req 26: el dispositivo deberá permitir seleccionar al patrón por medio de su identificador y solicitar su transferencia por puerto serie.
 \end{itemize}
 
 Los requerimientos 23 y 24 fueron modificados debido a que el almacenamiento de las DP es realizado directamente en el pendrive. De esta forma se puede reducir el costo en el diseño y se elimina la necesidad de transferir archivos entre memorias. Ambos requerimientos fueron reemplazados por el siguiente:
 \begin{itemize}
-\item Deberá almacenar en el pendrive el patrón de DP al finalizar su adquisición.
+\item deberá almacenar en el pendrive el patrón de DP al finalizar su adquisición.
 \end{itemize}
 
 
@@ -143,6 +143,8 @@ Por lo expuesto anteriormente, un conversor analógico digital debe ser precedid
 	\label{fig:muestreo3}
 \end{figure}
 
+\newpage
+
 \section{Listado de herramientas utilizadas}
 Para este trabajo se utilizaron las siguientes herramientas de hardware:
 \begin{itemize}
@@ -156,7 +158,7 @@ Para este trabajo se utilizaron las siguientes herramientas de hardware:
 \end{itemize}
 
 
-También se utilizaron la siguiente herramientas de software:
+También se utilizaron las siguientes herramientas de software:
 \begin{itemize}
 \item Mcuxpresso ide 11.3 para el diseño del firmware \citep{mcuxpresso}.
 \item Python 3 para la generación de scripts para el banco de prueba y scripts de procesamiento de datos.

@@ -31,12 +31,45 @@ Para los ensayos efectuados en laboratorio se montó un banco de pruebas, figura
 El banco permitió simular, por medio del generador de señales, la forma de onda de una DP y sincronizarla con una senoide de referencia de 50Hz. La computadora portátil fue utilizada para acceder por medio del puerto serial a la interfaz de usuario del equipo. También se empleó para controlar al DDS utilizando la base de datos de DP agrupadas por patrones proporcionada por el cliente.
 El conjunto de elementos permitió realizar diversas pruebas manuales y automatizadas.
 
-Durante el montaje del banco de pruebas se encontró una limitación en el generador DDS FY6900 que obligó a replantear el proceso de prueba. Debido a que este generador no permite establecer demoras entre los disparos de sus canales las validaciones de amplitud y fase se realizaron en diferentes ensayos.
+Durante el montaje del banco de pruebas se encontró una limitación en el generador DDS FY6900 que obligó a replantear el proceso de prueba. Debido a que este generador no permite establecer demoras entre los disparos de sus canales, las validaciones de amplitud y fase se realizaron en diferentes ensayos.
+
+\section{Resumen de tiempos}
+
+Por medio de esta subsección se pretende hacer un breve resumen de los tiempos requeridos para los procesos de adquisición, procesamiento y almacenado.
+
+La siguiente línea de tiempo, figura \ref{fig:lineaDeTiempo}, fue realizada con el equipo configurado para procesar el patrón de DP y almacenar las descargas parciales en el pendrive USB. La ocurrencia de DPs en el canal de entrada fue tal que el equipo no tuvo tiempos de espera entre rearmes.
+
+\vspace{5mm}
+\begin{figure}[ht]
+\stackunder[-1ex]{%
+  \Shortstack{25,6uS\\ \ddbrace{1.2in}\\ Adquisición \\ \dx{1.2in}}%
+  \Shortstack{90uS\\ \ddbrace{1.2in}\\ Rearme \\ \dx{1.2in}}%
+  \Shortstack{5,5mS\\ \ddbrace{1.2in}\\ Procesamiento \\ \dx{1.2in}}%
+  \Shortstack{10,5mS\\ \ddbrace{1.2in}\\ Almacenado \\ \dx{1.2in}}%
+}{%
+  \Shortunderstack{
+  	\vstrut[0\mathrm{ms}]................................\vstrut[]................................%
+    \vstrut[0,924\mathrm{ms}]\\ \dubrace{2.4in}\\x8 Slots}%
+  \dline{1.2in}%   
+  \Shortunderstack{
+    \vstrut[6,424\mathrm{ms}] \dline{1.2in}\vstrut[16,924\mathrm{ms}]}%
+}
+\caption{Línea de tiempo en base a la adquisición de un banco completo.}
+\label{fig:lineaDeTiempo}
+\end{figure}
+
+\vspace{5mm}
+
+Los tiempos antes mencionados se obtuvieron durante los ensayos descritos en este capítulo.
+
+
 
 \section{Ensayos de amplitud}
 Durante los ensayos de amplitud se buscó validar que las señales obtenidas por el equipo correspondieran en amplitud y forma con la señales inyectadas por el DDS. Para esto se generaron señales senoidales en diferentes frecuencias.
 
-Este ensayo también se utilizó para validar la respuesta en frecuencia del filtro de entrada. Para esto se inyectaron señales senoidales de 600 mVpp en distintas frecuencias y se realizaron adquisiciones con el fin de comparar lo obtenido con lo inyectado, figura \ref{fig:sin1} y \ref{fig:sin39}. Puede observarse que a igual tensión de entrada, la figura \ref{fig:sin39} se encuentra atenuada en -2,5dB por ser una frecuencia cercana a la frecuencia de corte del filtro. 
+Este ensayo también se utilizó para validar la respuesta en frecuencia del filtro de entrada. Para esto se inyectaron señales senoidales de 600 mVpp en distintas frecuencias y se realizaron adquisiciones con el fin de comparar lo obtenido con lo inyectado, figura \ref{fig:sin1} y \ref{fig:sin39}. Puede observarse que a igual tensión de entrada, la señal de la figura \ref{fig:sin39} se encuentra atenuada en -2,5dB por ser una frecuencia cercana a la frecuencia de corte del filtro. 
+
+\newpage
 
 \begin{figure}[htpb]
 	\hspace{-1.2cm}
@@ -56,13 +89,13 @@ Este ensayo también se utilizó para validar la respuesta en frecuencia del fil
 
 En la tabla \ref{tab:tensiones} se representan la máxima tensión de entrada y la máxima tensión adquirida para cada frecuencia registrada. Por medio de estos valores se calculó la respuesta en frecuencia del filtro real.
  
-Para garantizar la correcta detección del valor máximo de la senoide sintetizada, se eligieron frecuencias que no sean múltiplos de la frecuencia de muestreo, de modo de lograr un batido que en un número considerable de muestras se logre barrer un período completo de la señal inyectada.
+Para garantizar la correcta detección del valor máximo de la senoide sintetizada, se eligieron frecuencias que no sean múltiplos de la frecuencia de muestreo, de modo de lograr un batido que en un número considerable de muestras logre barrer un período completo de la señal inyectada.
  
 \vspace{5mm}
 
 \begin{table}[h]
 \centering
-\caption[Antenuación del filtro]{Atenuación del filtro}
+\caption[Antenuación del filtro.]{Atenuación del filtro}
 \begin{tabular*}{\textwidth}{l c c c c}
 \toprule
 \textbf{f (MHz)} & \textbf{Entrada (mV)} & \textbf{Salida (mV)} & \textbf{Atenuación (dB)} & \textbf{At. esperada (dB)}\\
@@ -80,11 +113,10 @@ Para garantizar la correcta detección del valor máximo de la senoide sintetiza
 \label{tab:tensiones}
 \end{table}
 
-\vspace{5mm}
+\newpage
 
-En la figura \ref{fig:respFrecReal} se puede observar la comparativa entre la respuesta del filtro esperada y la deseada
+En la figura \ref{fig:respFrecReal} se puede observar la comparativa entre la respuesta del filtro esperada y la deseada.
 
-\vspace{5mm}
 
 \begin{figure}[ht]
 	\centering
@@ -93,7 +125,7 @@ En la figura \ref{fig:respFrecReal} se puede observar la comparativa entre la re
 	\label{fig:respFrecReal}
 \end{figure}
 
-\vspace{10mm}
+\vspace{5mm}
 
 \section{Ensayos de integridad}
 
@@ -103,56 +135,71 @@ Durante estos ensayos se buscó determinar que la forma de onda capturada por el
 \begin{figure}[htpb]
 	\hspace{-1.2cm}
 	\includegraphics[width=165mm]{./Figures/dpSint.png}
-	\caption{DP sintetizada 400mvpp capturada por el equipo.}
+	\caption{DP sintetizada 400 mVpp capturada por el equipo.}
 	\label{fig:dpSint}
 \end{figure}
 
-La señal generada fue muestreada por medio de un osciloscopio Siglent SDS1202X-E de 200 Mhz de ancho de banda y 1 Gs de tasa de muestreo. La misma señal fue muestreada por el equipo adquisidor de DP a una tasa de 80 Ms. Para que ambas señales tengan las mismas características y puedan ser comparadas, se aplicó de forma matemática sobre la señal muestreada por el osciloscopio la respuesta en frecuencia del filtro que se encuentra en la entrada del equipo. Ambas señales fueron graficadas superpuestas en la figura \ref{fig:compPulsos} donde se utilizó un trazo continuo azul para las adquisiciones realizadas por el osciloscopio y una serie de puntos en color rojo para las adquisiciones realizadas por el equipo.
+\vspace{5mm}
 
-Se puede observar que las muestras adquiridas por ambos equipos coinciden durante toda la señal. También se identifica una buena distribución de muestras a 80 Ms, suficiente para detectar el valor máximo sin la necesidad de hacer un \textit{resampling} de la señal.
+La señal generada fue muestreada por medio de un osciloscopio Siglent SDS1202X-E de 200 MHz de ancho de banda y 1 Gsample de tasa de muestreo. La misma señal fue muestreada por el equipo adquisidor de DP a una tasa de 80 Msamples. 
+
+Para que ambas señales tengan las mismas características y puedan ser comparadas, se aplicó de forma matemática sobre la señal muestreada por el osciloscopio, la respuesta en frecuencia del filtro que se encuentra en la entrada del equipo. Ambas señales fueron graficadas superpuestas en la figura \ref{fig:compPulsos} donde se utilizó un trazo continuo rojo para las adquisiciones realizadas por el osciloscopio y una serie de puntos en color azul para las adquisiciones realizadas por el equipo.
+
+Se puede observar que las muestras adquiridas por ambos equipos coinciden durante toda la señal. También se identifica una buena distribución de muestras a 80 Msample, suficiente para detectar el valor máximo sin la necesidad de hacer un \textit{resampling} de la señal.
+
+\vspace{5mm}
 
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=135mm]{./Figures/compPulsos.png}
+	\includegraphics[width=137mm]{./Figures/compPulsos.png}
 	\caption{Comparación entre la DP adquirida por el osciloscopio y la DP adquirida adquirida por el equipo.}
 	\label{fig:compPulsos}
 \end{figure}
 
+\vspace{5mm}
 
 Un análisis de Fourier sobre las señales permitió realizar una comparación de la distribución de energía en el espectro para cada señal, figura \ref{fig:compEspectro}. También se utilizó como herramienta para conocer los componentes principales de frecuencia de la DP analizada.
 
+\vspace{5mm}
+
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=135mm]{./Figures/compEspectro.png}
+	\includegraphics[width=137mm]{./Figures/compEspectro.png}
 	\caption{Analisis de Fourier de una DP adquirida por un osciloscopio Siglent SDS1202X-E y  por el equipo.}
 	\label{fig:compEspectro}
 \end{figure}
 
+\vspace{5mm}
+\newpage
 
 \section{Ensayos de disparo}
 Durante los ensayos de disparo se realizaron mediciones del tiempo requerido por el sistema para poder rearmar su \textit{trigger}. Esta latencia se encuentra determinada principalmente por el tiempo requerido para configurar nuevamente los punteros a memoria y reiniciar el periférico ADC de alta velocidad. 
 
-En la figura \ref{fig:oscDisparos} puede verse un oscilograma realizado con una base de tiempo de 200uS/division. La medición fue realizada asegurando una tasa de repetición DP suficiente para producir disparos de forma constante en el equipo, evitando tiempos de espera. El estado alto de la señal representa la adquisición de muestras por parte del equipo. Puede observarse un tren de ocho pulsos que corresponde al armado y disparo de los ocho \textit{slots} dentro del banco de memoria.
+En la figura \ref{fig:oscDisparos} puede verse un oscilograma realizado con una base de tiempo de 200uS/división. La medición fue realizada asegurando una tasa de repetición DP suficiente para producir disparos de forma constante en el equipo, evitando tiempos de espera. El estado alto de la señal representa la adquisición de muestras por parte del equipo. Puede observarse un tren de ocho pulsos que corresponde al armado y disparo de los ocho \textit{slots} dentro del banco de memoria.
 
 Durante la adquisición de los \textit{slots} pertenecientes al mismo banco de memoria, el tiempo de rearme (nivel bajo) fue de 90 uS. Considerando que un grado de la senoide de referencia representa un tiempo igual a 55 uS, la tasa máxima de repetición fue de 1 DP cada 1°36’. El tiempo de adquisición (nivel alto) fue de 25,6 uS, equivalente a \textit{1/80 MHz * 2048} muestras. 
 
+\vspace{5mm}
 
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=140mm]{./Figures/disparos.png}
-	\caption{Adquisición de un banco 16k muestras dividido en 8 slots de 2k muestras cada uno.}
+	\caption{Adquisición de un banco de 16k muestras dividido en 8 slots de 2k muestras cada uno.}
 	\label{fig:oscDisparos}
 \end{figure}
 
+\vspace{5mm}
 
 Además del tiempo requerido para el rearme se realizaron mediciones sobre el tiempo mínimo requerido, por el procesador, para atender el disparo del \textit{trigger}. Este tiempo es de suma importancia porque determina cuantas muestras de desplazamiento existen desde que el \textit{trigger} detectó su disparo hasta que el procesador pudo atenderlo. 
 
+\newpage
+
 El tiempo mínimo de latencia para un cortex M4 es de 12 ciclos de reloj. Ya que la velocidad del núcleo es de 204 MHz y la del conversor AD es de 80 MHz se puede determinar que la latencia minima es de 5 muestras. 
 
-En la figura \ref{fig:tiempoInicial} se muestra un ejemplo del efecto producido por la latencia en la atención de la interrupción. La adquisición fue realizada con el \textit{trigger} por flanco ascendente configurado en 100 mV, sin embargo no fue hasta 5 muestras después que la interrupcion del \textit{trigger} fue atendida esto determinó el inicio del muestreo cerca de los 200 mV.
+En la figura \ref{fig:tiempoInicial} se muestra un ejemplo del efecto producido por la latencia en la atención de la interrupción. La adquisición fue realizada con el \textit{trigger} por flanco ascendente configurado en 100 mV, sin embargo no fue hasta 5 muestras después que la interrupcion del \textit{trigger} fue atendida. Esto determinó el inicio del muestreo cerca de los 200 mV.
 
-Durante esta etapa también se realizaron pruebas comparativas a fin de determinar el \textit{jitter} entre los diferentes disparos. Ya que el tiempo de atención de la interrupción depende ademas de como se haya diseñado el firmware y de la utilización de los bancos de memoria RAM. El \textit{jitter} medido fue siempre inferior a 4 muestras oscilando normalmente entre 1 y 2 .
+Durante esta etapa también se realizaron pruebas comparativas a fin de determinar el \textit{jitter} entre los diferentes disparos. Ya que el tiempo de atención de la interrupción depende además de como se haya diseñado el firmware y de la utilización de los bancos de memoria RAM. El \textit{jitter} medido fue siempre inferior a 4 muestras, oscilando normalmente entre 1 y 2 .
 
 \begin{figure}[htpb]
 	\hspace{-1.2cm}
@@ -166,15 +213,13 @@ Durante esta etapa también se realizaron pruebas comparativas a fin de determin
 
 Los ensayos de fase buscan verificar que la detección de una DP determinada está vinculada con el momento angular correcto de la senoide de referencia.
 
-Debido a restricciones del banco de pruebas para disparar una DP sintetizada en un momento angular dado de la senoide de referencia, se recurrió a simular la DP con una señal cuadrada de 50 Hz con un duty cicle del 0,001\% para la señales positivas y de 99,999\% para las negativas. De esta manera la entrada optoacoplada y la entrada de DP pudieron ser excitadas en forma conjunta durante todo el periodo de la señal de referencia al desplazar la fase de la DP simulada acorde a la base de datos.
+Debido a restricciones del banco de pruebas para disparar una DP sintetizada en un momento angular dado de la senoide de referencia, se recurrió a simular la DP con una señal cuadrada de 50 Hz con un ciclo de trabajo del 0,001\% para la señales positivas y de 99,999\% para las negativas. De esta manera la entrada optoacoplada y la entrada de DP pudieron ser excitadas en forma conjunta durante todo el periodo de la señal de referencia al desplazar la fase de la DP simulada acorde a la base de datos.
 
-Como consecuencia de este método, la señal inyectada en la entrada de DP es un pulso de breve periodo a una frecuencia de 50 Hz que no se encuentra dentro del rango lineal del filtro. Es por esto que la medición de tensión no se tomó en cuenta para este ensayo.
+Como consecuencia de este método, la señal inyectada en la entrada de DP es un pulso de breve período a una frecuencia de 50 Hz que no se encuentra dentro del rango lineal del filtro. Es por esto que la medición de tensión no se tomó en cuenta para este ensayo.
 
-\vspace{5mm}
+Además de verificar disparos individuales configurados manualmente, se realizó un script en python con la librería Fygen \citep{fygenWeb:1}, capaz de sintetizar un patrón de DP. Los datos utilizados provienen de archivos Matlab que fueron previamente generados en base a mediciones reales realizadas por el cliente.
 
-Además de verificar disparos individuales configurados manualmente, se realizó un script en python con la librería Fygen \citep{fygenWeb:1} capaz de sintetizar un patrón de DP. Los datos utilizados provienen de archivos Matlab que fueron previamente generados en base a mediciones reales realizadas por el cliente.
-
-En las figuras \ref{fig:corona1Original}, \ref{fig:corona1Propia}, \ref{fig:corona2Original} y \ref{fig:corona2Propia} pueden verse la comparativa entre los patrónes de DP generados por el cliente y su homonimo generado por el equipo en base a la misma secuencia de señales sintetizadas. Como difierencia se encuentra que la escala vertical del patron original se encuentra expresada en pC y la generada en mV debido al proceso de calibración que se realizó cuando las pruebas fueron tomadas. Como fue explicado al inicio de este capítulo la magnitud solo fue tomada como referencia por tratarse de un ensayo de fase.
+En las figuras \ref{fig:corona1Original}, \ref{fig:corona1Propia}, \ref{fig:corona2Original} y \ref{fig:corona2Propia} pueden verse la comparativa entre los patrones de DP generados por el cliente y sus homonimos generados por el equipo en base a la misma secuencia de señales sintetizadas. Como difierencia se encuentra que la escala vertical del patrón original se encuentra expresada en pC y la generada en mV debido, al proceso de calibración que se realizó cuando las pruebas fueron tomadas. Como fue explicado al inicio de este capítulo la magnitud solo fue tomada como referencia por tratarse de un ensayo de fase.
 
 \vspace{10mm}
 
@@ -208,8 +253,6 @@ En las figuras \ref{fig:corona1Original}, \ref{fig:corona1Propia}, \ref{fig:coro
     \caption{Comparación entre un patrón original y un patrón sintetizado.}
 \end{figure}
 
-\newpage
-
 Durante esta etapa también se verificó el correcto funcionamiento del detector de cruce por cero. En la figura \ref{fig:zeroCross} puede verse la comparación entre la senoide de referencia (amarillo)  y la salida aislada ópticamente (rosa).
 
 \vspace{5mm}
@@ -226,7 +269,7 @@ Durante esta etapa también se verificó el correcto funcionamiento del detector
 \section{Tiempos de procesamiento}
 Los ensayos de tiempo de procesamiento se realizaron utilizando un osciloscopio y un pin de salida de la placa \enquote{LPC link2} como marcador del estado interno del procesador. Durante este ensayo se buscó cuantificar el tiempo requerido por el procesador para realizar los distintos procesamientos. Para esto se generó solo una DP por ciclo de la senoide de referencia. 
 
-El estado alto del oscilograma, figura \ref{fig:tiempoSavePatron}, indica que el equipo está armado y el estado bajo que el equipo está desarmado. De esta forma puede apreciarse el periodo de 20 mS entre adquisición, resultado de haber una DP por ciclo de la senoide de referencia. También se visualiza luego de ocho adquisiciones el tiempo requerido para el procesamiento de los datos. 
+El estado alto del oscilograma, figura \ref{fig:tiempoSavePatron}, indica que el equipo está armado y el estado bajo que el equipo está desarmado. De esta forma puede apreciarse el período de 20 ms entre adquisición, resultado de haber una DP por ciclo de la senoide de referencia. También se visualiza luego de ocho adquisiciones el tiempo requerido para el procesamiento de los datos. 
 
 La operatoria de procesamiento se ejecuta al finalizar la adquisición de un bloque de memoria. Durante la misma se recorren los \textit{slots} en búsqueda del valor máximo absoluto, una vez encontrado se calcula la fase de la senoide de referencia que pertenece al mismo y se guarda en memoria RAM. Los resultados demuestran que para ejecutar este proceso sobre un banco de 16384 muestras es necesario un tiempo de 5,5 mS. Esto equivale a 99° de desplazamiento angular de la senoide de referencia. 
 
@@ -248,9 +291,9 @@ Si el proceso finaliza antes de comenzar un nuevo semiciclo el procesador puede 
 
 Los ensayos de almacenamiento se realizaron con el fin de determinar cuánto tiempo requiere el procesador para almacenar el total de la adquisición en el soporte flash USB. Al igual que el procesamiento, este proceso se realiza al completar un banco de memoria, por lo que se efectúan rafagas de escritura de 32 kB. Junto con el volcado de memoria se efectúa el proceso de búsqueda de pico y fase descripto en el ensayo de procesamiento. 
 
-El abordaje para esta prueba fue igual al realizado durante el ensayo de procesamiento, solo se generó una DP por ciclo de la senoide de referencia. Puede apreciarse en el oscilograma, figura \ref{fig:tiempoSaveAll}, un tren de ocho DP a una distancia de 20mS finalizados por el tiempo requerido para procesar y almacenar el banco.
+El abordaje para esta prueba fue igual al realizado durante el ensayo de procesamiento, solo se generó una DP por ciclo de la senoide de referencia. Puede apreciarse en el oscilograma, figura \ref{fig:tiempoSaveAll}, un tren de ocho DP a una distancia de 20ms. A continuación se encuentra, en estado bajo, el tiempo requerido para procesar y almacenar el banco de memoria RAM, donde las DP fueron almacenadas.
 
-El tiempo requerido para realizar un vuelco de memoria y su procesamiento es de 16 mS esto es igual a 288° de desplazamiento angular sobre la senoide de referencia. Al igual que en el proceso de procesamiento el sistema podrá rearmarse si finaliza antes del inicio de un nuevo periodo, de lo contrario deberá dejar un ciclo muerto.
+El tiempo requerido para realizar un vuelco de memoria y su procesamiento es de 16 ms, lo que es igual a 288° de desplazamiento angular sobre la senoide de referencia. Al igual que en el proceso de procesamiento el sistema podrá rearmarse si finaliza antes del inicio de un nuevo período, de lo contrario deberá dejar un ciclo muerto.
 
 \begin{figure}[ht]
 	\centering
@@ -259,35 +302,7 @@ El tiempo requerido para realizar un vuelco de memoria y su procesamiento es de 
 	\label{fig:tiempoSaveAll}
 \end{figure}
 
+\vspace{5mm}
 \newpage
-
-\vspace{5mm}
-
-\section{Resumen de tiempos}
-
-Por medio de esta subsección se pretende hacer un breve resumen de los tiempos requeridos para los procesos de adquisición, procesamiento y almacenado.
-
-La siguiente línea de tiempo, figura \ref{fig:lineaDeTiempo}, fue realizada con el equipo configurado para procesar el patrón de DP y almacenar las descargas parciales en el pendrive USB. La ocurrencia de DPs en el canal de entrada fue tal que el equipo no tuvo tiempos de espera entre rearmes.
-
-\vspace{5mm}
-\begin{figure}[ht]
-\stackunder[-1ex]{%
-  \Shortstack{25,6uS\\ \ddbrace{1.2in}\\ Adquisición \\ \dx{1.2in}}%
-  \Shortstack{90uS\\ \ddbrace{1.2in}\\ Rearme \\ \dx{1.2in}}%
-  \Shortstack{5,5mS\\ \ddbrace{1.2in}\\ Procesamiento \\ \dx{1.2in}}%
-  \Shortstack{10,5mS\\ \ddbrace{1.2in}\\ Almacenado \\ \dx{1.2in}}%
-}{%
-  \Shortunderstack{
-  	\vstrut[0\mathrm{ms}]................................\vstrut[]................................%
-    \vstrut[0,924\mathrm{ms}]\\ \dubrace{2.4in}\\x8 Slots}%
-  \dline{1.2in}%   
-  \Shortunderstack{
-    \vstrut[6,424\mathrm{ms}] \dline{1.2in}\vstrut[16,924\mathrm{ms}]}%
-}
-\caption{Línea de tiempo en base a la adquisición de un banco completo.}
-\label{fig:lineaDeTiempo}
-\end{figure}
-\vspace{5mm}
-
 \section{Pruebas en campo}
 Debido a la pandemia global COVID-19 no fue posible realizar pruebas en campo ni en el laboratorio situado en la Universidad Tecnológica Nacional Regional General Pacheco. Dichos ensayos están pendientes a ser realizados cuando se tenga permiso de acceso al laboratorio.
