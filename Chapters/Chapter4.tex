@@ -219,7 +219,7 @@ Como consecuencia de este método, la señal inyectada en la entrada de DP es un
 
 Además de verificar disparos individuales configurados manualmente, se realizó un script en python con la librería Fygen \citep{fygenWeb:1}, capaz de sintetizar un patrón de DP. Los datos utilizados provienen de archivos Matlab que fueron previamente generados en base a mediciones reales realizadas por el cliente.
 
-En las figuras \ref{fig:corona1Original}, \ref{fig:corona1Propia}, \ref{fig:corona2Original} y \ref{fig:corona2Propia} pueden verse la comparativa entre los patrones de DP generados por el cliente y sus homonimos generados por el equipo en base a la misma secuencia de señales sintetizadas. Como difierencia se encuentra que la escala vertical del patrón original se encuentra expresada en pC y la generada en mV debido, al proceso de calibración que se realizó cuando las pruebas fueron tomadas. Como fue explicado al inicio de este capítulo la magnitud solo fue tomada como referencia por tratarse de un ensayo de fase.
+En las figuras \ref{fig:corona1Original}, \ref{fig:corona1Propia}, \ref{fig:corona2Original} y \ref{fig:corona2Propia} pueden verse la comparativa entre los patrones de DP generados por el cliente y sus homónimos generados por el equipo en base a la misma secuencia de señales sintetizadas. Como difierencia se encuentra que la escala vertical del patrón original se encuentra expresada en pC y la generada en mV debido, al proceso de calibración que se realizó cuando las pruebas fueron tomadas. Como fue explicado al inicio de este capítulo la magnitud solo fue tomada como referencia por tratarse de un ensayo de fase.
 
 \vspace{10mm}
 
@@ -269,7 +269,7 @@ Durante esta etapa también se verificó el correcto funcionamiento del detector
 \section{Tiempos de procesamiento}
 Los ensayos de tiempo de procesamiento se realizaron utilizando un osciloscopio y un pin de salida de la placa \enquote{LPC link2} como marcador del estado interno del procesador. Durante este ensayo se buscó cuantificar el tiempo requerido por el procesador para realizar los distintos procesamientos. Para esto se generó solo una DP por ciclo de la senoide de referencia. 
 
-El estado alto del oscilograma, figura \ref{fig:tiempoSavePatron}, indica que el equipo está armado y el estado bajo que el equipo está desarmado. De esta forma puede apreciarse el período de 20 ms entre adquisición, resultado de haber una DP por ciclo de la senoide de referencia. También se visualiza luego de ocho adquisiciones el tiempo requerido para el procesamiento de los datos. 
+El estado alto del oscilograma, figura \ref{fig:tiempoSavePatron}, indica que el equipo está armado y el estado bajo que el equipo está desarmado. De esta forma puede apreciarse el período de 20 ms entre adquisición, resultado de haber una DP por ciclo de la senoide de referencia. También se visualiza luego de ocho adquisiciones, el tiempo requerido para el procesamiento de los datos. 
 
 La operatoria de procesamiento se ejecuta al finalizar la adquisición de un bloque de memoria. Durante la misma se recorren los \textit{slots} en búsqueda del valor máximo absoluto, una vez encontrado se calcula la fase de la senoide de referencia que pertenece al mismo y se guarda en memoria RAM. Los resultados demuestran que para ejecutar este proceso sobre un banco de 16384 muestras es necesario un tiempo de 5,5 mS. Esto equivale a 99° de desplazamiento angular de la senoide de referencia. 
 

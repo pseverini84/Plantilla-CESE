@@ -3,20 +3,20 @@
 \chapter{Conclusiones} % Main chapter title
 
 \label{Chapter5} % Change X to a consecutive number; for referencing this chapter elsewhere, use \ref{ChapterX}
-Durante este capítulo se realiza un breve resumen del trabajo realizado, los problemas encontrados y los resultados obtenidos. También se incluye una reseña de posibles implementaciones futuras.
+Durante este capítulo se realiza un breve resumen del trabajo realizado, los problemas encontrados y los resultados obtenidos. También se incluye una reseña de posibles implementaciones futuras.\label{a:a}
 %----------------------------------------------------------------------------------------
 %	SECTION 1
 %----------------------------------------------------------------------------------------
 
 \section{Trabajo obtenido}
 
-El trabajo finalizó con el desarrollo exitoso de un prototipo medidor de DP. Este se armó utilizando una placa de desarrollo “LPC Link 2” y una placa adicional para el filtrado de la señal analógica y adquisición de la senoide de referencia. El equipo logrado es de bajo costo, tamaño reducido y cumple con todos los requerimientos pautados con el cliente a excepción de los requerimientos Req 23 y Req 24 que fueron modificados sin perjudicar la funcionalidad del mismo.
+El trabajo finalizó con el desarrollo exitoso de un prototipo medidor de DP. Este se armó utilizando una placa de desarrollo “LPC Link 2” y una placa adicional para el filtrado de la señal analógica y adquisición de la senoide de referencia. El equipo logrado es de bajo costo, tamaño reducido y cumple con todos los requerimientos pautados con el cliente a excepción de los requerimientos \ref{req:23} y \ref{req:24} que fueron modificados sin perjudicar la funcionalidad del mismo.
 
 Este prototipo es capaz de generar un patrón de DP de forma autónoma y almacenarlo en un pendrive USB. Para esto permite configurar una serie de parámetros que luego serán utilizados en la adquisición del patrón. Además el equipo permite, de forma optativa, almacenar el muestreo completo de cada DP. Los datos obtenidos pueden ser accedidos por medio del puerto serie usando la interfaz de usuario implementada o pueden procesarse desde la unidad flash utilizado una serie de scripts provistos realizados en Python.
 
 Por medio de las pruebas realizadas pudo validarse la correcta medición de DP sintetizadas de forma digital, también se validó la correcta confección del patrón de DP. Debido a la pandemia global causada por el COVID-19 no fue posible realizar pruebas en el laboratorio de la Universidad Tecnológica Nacional Regional General Pacheco.
 
-En cuanto a la planificación, se cumplió dentro de los plazos esperados a pesar de haberse manifestado el principal riesgo: “restricciones de velocidad para realizar la adquisición”. Se invirtió una suma de tiempo sustancial en mitigar este riesgo, durante esta etapa se intentó resolver la adquisición por medio de un FPGA y un conversor externo de alta velocidad de forma exitosa. Finalmente fue reemplazado por el LPC4370 por motivos de costo y complejidad.
+En cuanto a la planificación, se cumplió dentro de los plazos esperados a pesar de haberse manifestado el principal riesgo: “restricciones de velocidad para realizar la adquisición”. Se invirtió una suma de tiempo sustancial en mitigar este riesgo, durante esta etapa se intentó resolver la adquisición por medio de una FPGA y un conversor externo de alta velocidad de forma exitosa. Finalmente fue reemplazado por el LPC4370 por motivos de costo y complejidad.
 
 \newpage
 %----------------------------------------------------------------------------------------
@@ -24,17 +24,17 @@ En cuanto a la planificación, se cumplió dentro de los plazos esperados a pesa
 %----------------------------------------------------------------------------------------
 \section{Conocimientos aplicados}
 
-Durante la realización de este proyecto se aplicaron conocimientos adquiridos en el transcurso de la especialidad. Las asignaturas que más aportaron para la realización de este trabajo fueron:
+Durante la realización de este proyecto se aplicaron conocimientos adquiridos en el transcurso de la carrera. Las asignaturas que más aportaron para la realización de este trabajo fueron:
 \begin{itemize}
-\item Gestión de proyecto para crear la documentación relativa a la planificación y seguimiento.
-\item Programación de microcontroladores para la implementación del firmware en C del microcontrolador ARM M4 elegido.
+\item Gestión de proyectos para crear la documentación relativa a la planificación y seguimiento.
+\item Programación de microcontroladores para la implementación del firmware en C del microcontrolador ARM Cortex-M4 elegido.
 \item Ingeniería de software para seguir buenas prácticas de diseño y documentación.
 \end{itemize}
 
 \section{Trabajo futuro}
-A fin de lograr un equipo apto para el mercado como actividades de mejora a futuro se propone:
+A fin de lograr un equipo apto para el mercado como actividades de mejora a futuro se proponen:
 \begin{itemize}
-\item Utilizar los dos cortex M0 para revertir los efectos del filtro de forma digital y hacer un resampling de la señal con el objetivos de mejorar la precisión del máximo obtenido.
+\item Utilizar los dos Cortex-M0 para revertir los efectos del filtro de forma digital y hacer un resampling de la señal con el objetivo de mejorar la precisión del máximo obtenido.
 \item Permitir la carga de parámetros de configuración por medio del pendrive USB. 
-\item Implementar un sistema de pre-trigger que permita mantener n muestras anteriores al momento del disparo.
+\item Implementar un sistema de pre-trigger que permita mantener N muestras anteriores al momento del disparo.
 \end{itemize}
