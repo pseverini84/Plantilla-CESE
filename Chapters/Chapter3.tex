@@ -6,7 +6,7 @@ Durante este capítulo se explica el diseño e implementación del software y ha
 \section{Diseño del Hardware}
 \subsection{Cruce por cero}
 
-Debido a que la medición de una descarga parcial debe estar relacionada con la senoide de referencia por medio de su momento angular, el equipo fue provisto de un medio para conocer esta variable del sistema de forma constante.
+Debido a que la medición de una DP debe estar relacionada con la senoide de referencia por medio de su momento angular, el equipo fue provisto de un medio para conocer esta variable del sistema de forma constante.
 
 El método elegido para la medición de fase fue un circuito de detección de cruce por cero combinado con un timer interno del microcontrolador. Se optó por este método porque puede ser aislado por medio de un optoacoplador y soportar conexiones directas con senoides de referencia de hasta 300 V. Otro motivo es que solo al ser de interés el momento angular, un timer de 32 bits brinda mejor resolución que un conversor analógico digital y requiere menos procesamiento.
 
@@ -60,7 +60,7 @@ La salida del circuito se encuentra conectada a un pin del microcontrolador que 
 \vspace{10mm}
 \subsection{Filtro}
 
-Para la medición de la descarga parcial se utilizó el conversor analógico digital de alta velocidad del LPC4370 \citep{micro:lpc4370}, configurado en modo diferencial. En el capítulo 2 se explicó la importancia de un filtro \textit{anti-aliasing} para evitar interferencia de frecuencias indeseadas en la medición. Ya que el conversor analógico digital tiene una velocidad máxima de 80 MSPS, el filtro fue calculado para tener una frecuencia de corte igual a 40MHz. Figura \ref{fig:respFrec}. 
+Para la medición de la DP se utilizó el conversor analógico digital de alta velocidad del LPC4370 \citep{micro:lpc4370}, configurado en modo diferencial. En el capítulo 2 se explicó la importancia de un filtro \textit{anti-aliasing} para evitar interferencia de frecuencias indeseadas en la medición. Ya que el conversor analógico digital tiene una velocidad máxima de 80 MSPS, el filtro fue calculado para tener una frecuencia de corte igual a 40MHz. Figura \ref{fig:respFrec}. 
 
 \begin{figure}[ht]
 	\centering
@@ -75,7 +75,7 @@ El filtro implementado es un filtro \textit{Butterworth} diferencial de 3er orde
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=140mm]{./Figures/schFiltro.png}
-	\caption{Filtro diferencial \textit{Butterworth} de 3er orden. Frecuencia de corte 40Mhz.}
+	\caption{Filtro diferencial \textit{Butterworth} de 3er orden. Frecuencia de corte 40MHz.}
 	\label{fig:schFiltro}
 \end{figure}
 
@@ -182,7 +182,7 @@ Existen 4 grupos de comandos:
 Breve descripción de los comandos:
 \begin{itemize}
 \item mode -a [m]: permite activar el modo de adquisición automático con un intervalo de tiempo [minutos]. Este modo inicializa la creación de un patrón de DP cada \textit{m} minutos.
-\item mode -i [g-p] : inicializa la creación de un patrón de DP. Con el parámetro [g] lo grafica por medio de caracteres ASCII y no es guardado. Con el parámetro [p] el patrón y el muestreo de las descargas parciales son guardados en el pendrive.
+\item mode -i [g-p] : inicializa la creación de un patrón de DP. Con el parámetro [g] lo grafica por medio de caracteres ASCII y no es guardado. Con el parámetro [p] el patrón y el muestreo de las DP son guardados en el pendrive.
 \item mode -d : desarma el trigger y en caso de haber un patrón de DP en proceso de creación lo guarda.
 \item dccal: calibración para eliminar componente de continua.
 \item conf -t [mV] : permite configurar el valor del trigger en [mV]. El mismo valor será considerado como absoluto y será establecido como trigger positivo y negativo.
@@ -201,7 +201,7 @@ Breve descripción de los comandos:
 
 \vspace{5mm}
 
-La interfaz dispone de un modo de visualización de patrones de descarga parcial generado por caracteres \textit{ASCII}, figura \ref{fig:firmInterfaz}. Debido a la baja resolución existente en este modo, se utilizaron diferentes caracteres para representar densidad de DP en un área del patrón determinada. Este modo es especialmente práctico para configuración o consultas remotas. También puede solicitarse que una DP sea visualizada en forma de tabla.
+La interfaz dispone de un modo de visualización de patrones de DP generado por caracteres \textit{ASCII}, figura \ref{fig:firmInterfaz}. Debido a la baja resolución existente en este modo, se utilizaron diferentes caracteres para representar densidad de DP en un área del patrón determinada. Este modo es especialmente práctico para configuración o consultas remotas. También puede solicitarse que una DP sea visualizada en forma de tabla.
 
 \vspace{5mm}
 
